@@ -16,7 +16,19 @@
     {%- include footer.html -%}
 
   </body>
-  <script type="text/javascript">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+   var codes = $(".highlighter-rouge code").map(function(i,node) { return $(node).text() }).toArray()
+
+   $(".highlighter-rouge").each(function(i, node) {
+       var replacement = $('<div>')
+           .addClass('paren-soup')
+           .append($('<div>').addClass('instarepl'),
+                   $('<div>').addClass('numbers'),
+                   $('<div>').addClass('content').attr({contenteditable: true}).text(codes[i])
+                                   )
+       $(node).replaceWith(replacement)
+   })
    paren_soup.core.init_all();
   </script>
 
