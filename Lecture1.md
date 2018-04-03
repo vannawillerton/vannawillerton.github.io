@@ -58,11 +58,18 @@ This is a little hard to parse at first, but with a little effort you can see th
 In Clojure we can create named variables with the "def" primitive. 
 
 ```
-(defn x 1)
+(def x 1)
 ```
 
 "def" *binds* the value "1" to the variable called "x".
 
 ```
+(def x 1)
 (+ x x)
+```
+
+Now when we run the expression "(+ x x)" the interpreter first looks up the value of the variable "x" and then applies the function "+" to this value (twice). We can also use "def" to name functions created with "fn".
+
+```
+(def my-addition (fn [x y] (+ x y)))
 ```
