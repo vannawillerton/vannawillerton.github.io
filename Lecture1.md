@@ -142,3 +142,24 @@ A combination is just a list with a procedure in the first position.
 ```
 (list (fn [x y] (+ x y)) 1 2)
 ```
+
+The result of evaluating the expression above is a list with a procedure in the first position and the values "1" and "2" in the second and third position. This combination can be evaluated to produce an output.
+
+```
+(eval (list (fn [x y] (+ x y)) 1 2))
+```
+
+We can also quote a list to prevent the interpreter from treating it as a combination. 
+
+```
+'(1 2 3)
+```
+
+There is an important special case of lists in LISP which is usually written "'()". This is the empty list and is very important for reasons we will see below. We could also get the empty list by calling "list" with no arguments like this "(list)". 
+```
+'()
+```
+
+```
+(list)
+```
