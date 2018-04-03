@@ -31,7 +31,7 @@ The most important operation in the  $$\lambda$$-calculus is the application of 
 (+ 1 2)
 ```
 
-There are a few things to note about the example above. First, this kind of expression which starts with an open parenthesis, the name of a procedure, some number of arguments, and a close parenthesis is called a *combination* and is the way we instruct the interpreter to apply a function.  
+There are a few things to note about the example above. First, this kind of expression which starts with an open parenthesis, the name of a procedure, some number of arguments, and a close parenthesis is called a *combination* and is the way we instruct the language to apply a function.  
 
 Computing the output of this expression is called *evaluation* in LISP, and is performed by a primitive procedure called "eval". In this case, the result is the *value* "3". In general, in functional programming languages every well-formed expression has a value. Because 
  "+" is a *primitive procedure*&mdash;that is, a procedure built into the language&mdash;and "1" and "2" are *constants* with the *primitive type* of *integer*, it is easy to evaluate this expression. Of course the true power of LISP, like any programming language, comes from the ability to define new procedures that perform new computations, not just use existing primitives. The operator that allows the definition of new functions in the $$\lambda$$-calculus is called $$\lambda$$ and is what gives the  $$\lambda$$-calculus its name. In Clojure we write "fn" instead of $$\lambda$$. The general form of a $$\lambda$$ expression in Clojure looks like this:  "(fn [...parameters...] ...body...)". 
@@ -189,7 +189,7 @@ In LISP, programmers usually follow the convention that boolean-valued functions
 
 ### The Structure of Lists and Recursion
 
-The examples above show how lists are the basic datastructure used to define LISP programs and how they can be built using the `list` constructor or quoting. But what is a list really? In LISP, lists are represented internally using a representation known as a *linked list*. Really, a list in LISP is just a sequence of pairs where the last element in the sequence is the empty list like this: "(cons 1 (cons 2 (cons 3 (cons '1 ())))"
+The examples above show how lists are the basic datastructure used to define LISP programs and how they can be built using the "list" constructor or quoting. But what is a list really? In LISP, lists are represented internally using a representation known as a *linked list*. Really, a list in LISP is just a sequence of pairs where the last element in the sequence is the empty list like this: "(cons 1 (cons 2 (cons 3 (cons '1 ())))"
 
 ```
 (cons 1 (cons 2 (cons 3 (cons 4 '()))))
