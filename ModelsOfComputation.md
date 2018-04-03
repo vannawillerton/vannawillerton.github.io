@@ -1,8 +1,7 @@
 ---
-title: Lecture 1
+title: Models of Computation
 ---
 
-# Models of Computation
 
 How does language work? This is the foundational question which motivates the field of linguistics. The modern study of language or *generative linguistics* began in the late 1940s and early 1950s when it was realized that the emerging understanding of computation that resulted from the work of Kurt Gödel, Alan Turing, Alonzo Church, Emil Post, Rózsa Péter, Stephen Kleene and others might be able to shed light on this question. 
 
