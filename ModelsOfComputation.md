@@ -136,6 +136,12 @@ We have actually already seen many examples of lists in our code above. In Cloju
 (list 1 2 3)
 ```
 
+We can also use the unfortunately named "cons" procedure in order create a new list, with an element added on to it.
+
+```
+(cons 0 (list 1 2 3))
+```
+
 A combination is just a list with a procedure in the first position.
 
 ```
@@ -162,3 +168,32 @@ There is an important special case of lists in LISP which is usually written "'(
 ```
 (list)
 ```
+
+### Booleans
+
+Another important datatype in LISP are *boolean values* *true* and *false*. In Clojure these are written "true" and "false". For example, we can check the equality of two objects with the "=" procedure which returns if the two objects are the same (structurally) and false otherwise. 
+
+```
+(= '(1 2) '(1 2))
+(= '() (list))
+(= '(1 2) (list 1 2))
+(= '(1 2) (list 1 2 3))
+```
+
+In LISP, programmers usually follow the convention that boolean-valued functions, also known as *predicates* end in a question mark. Another important predicate we will see below is the predicate "empty?" which checks if its argument is an empty list/collection. 
+
+```
+(empty? '())
+(empty? (list 1 2 3))
+```
+
+### The Structure of Lists and Recursion
+
+The examples above show how lists are the basic datastructure used to define LISP programs and how they can be built using the `list` constructor or quoting. But what is a list really? In LISP, lists are represented internally using a representation known as a *linked list*. Really, a list in LISP is just a sequence of pairs where the last element in the sequence is the empty list like this: "(cons 1 (cons 2 (cons 3 (cons '1 ())))"
+
+```
+(cons 1 (cons 2 (cons 3 (cons 4 '()))))
+(list 1 2 3 4)
+```
+
+Notice that the list above is just a pair of the value "1" and another list "(2 3 4)", and similarly this latter list is just a pair of the value "2" and another list "(3 4)", and so on, with the last element in the sequence being the empyt or null list "'()". 
