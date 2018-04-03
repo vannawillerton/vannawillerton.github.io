@@ -104,3 +104,19 @@ What if we want to talk about the symbol itself, instead of always assuming that
 ```
 (quote some-symbol)
 ```
+
+```
+(def my-variable (quote some-symbol))
+my-variable
+```
+
+In the expression above, we created a variable called "my-variable" and bound it to the value of the expression "(quote some-symbol)". We then asked Clojure to interpret the symbol "my-variable". The language assumed that the symbol "my-variable" was a variable, and looked up its value which, thanks to the quote, was the **symbol** "my-symbol". Since we frequently want to quote expressions, Scheme provides a shorthand for this. Any expression preceded by a single quote "'" is considered to be quoted in the language.
+
+```
+'some-symbol
+```
+
+```
+(def my-variable 'some-symbol)
+my-variable
+```
