@@ -129,12 +129,16 @@ In addition to numbers, procedures, and symbols, LISP also has strings. A string
 (def my-string "some string")
 ```
 
-### Pairs
+### Lists
 
-We now come to one of the most important datastructures in LISP, the *pair*. A pair is just what it sounds like, a pair of values. To create a pair in LISP we use the unintuitively named "cons" procedure.
+We have actually already seen many examples of lists in our code above. In Clojure lists are written as a sequence of things appearing between parenthese "(v1 v2 v3 ...)". In other words, much of the code above consists of lists. In particular, combinations are just lists. When the Clojure gets a list as input, it assumes that this is a combination and tries to apply the function in the first position to the arguments in the rest of the positions (more on this later). We can explicitly construct a list using the "list" procedure.
 
 ```
-(cons 1 2)
+(list 1 2 3)
 ```
 
-You can see from the return value above that Clojure writes a pair with the notation "(x . y)". A pair is basically a container that holds two things. Like any other type of object in the language, we can bind a pair to a variable in order to name it.
+A combination is just a list with a procedure in the first position.
+
+```
+(list (fn [x y] (+ x y)) 1 2)
+```
