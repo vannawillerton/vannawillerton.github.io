@@ -24,12 +24,22 @@ LISP was the first programming language in the paradigm that became known as *fu
 
 We will use a variant of LISP called [Clojure](https://clojure.org/). Althought the language is very powerful, the basic syntax of Clojure is very simple and can be learned in a few minutes. In the next few sections, we will discuss the basics of Clojure, before proceeding to use the language to begin our study of language using these tools. 
 
+## Function Application
+
+The most important operation in the  $$\lambda$$-calculus is the application of a function (also called a *procedure* in LISP) to some arguments. In LISP procedure application is expressed in Polish notation like so: `(function argument1 argument2)`. For example, we can add `1` and `2` as follows. 
 
 ```
-(+ 1 1) ; put initial code here
+(+ 1 2)
 ```
 
-blah
+There are a few things to note about the example above. First, this kind of expression which starts with an open parenthesis, the name of a procedure, some number of arguments, and a close parenthesis is called a *combination* and is the way we instruct the interpreter to apply a function.  
+
+Computing the output of this expression is called *evaluation* in LISP, and is performed by a primitive procedure called `eval`. In this case, the result is the *value* `3`. In general, in functional programming languages every well-formed expression has a value. Because 
+ `+` is a *primitive procedure*&mdash;that is, a procedure built into the language&mdash;and `1` and `2` are *constants* with the *primitive type* of *integer*, it is easy to evaluate this expression. Of course the true power of LISP, like any programming language, comes from the ability to define new procedures that perform new computations, not just use existing primitives. The operator that allows the definition of new functions in the $$\lambda$$-calculus is called $$\lambda$$ and is what gives the  $$\lambda$$-calculus its name. In Clojure we write `fn` instead of $$\lambda$$. The general form of a $$\lambda$$ expression in Clojure looks like this:  `(fn [...parameters...] ...body...)`. 
+
+```
+(fn [x y] (+ x y))
+```
 
 ```
 foo
