@@ -120,3 +120,21 @@ In the expression above, we created a variable called "my-variable" and bound it
 (def my-variable 'some-symbol)
 my-variable
 ```
+
+### Strings
+
+In addition to numbers, procedures, and symbols, LISP also has strings. A string is written ""some string"".
+
+```
+(def my-string "some string")
+```
+
+### Pairs
+
+We now come to one of the most important datastructures in LISP, the *pair*. A pair is just what it sounds like, a pair of values. To create a pair in LISP we use the unintuitively named "cons" procedure.
+
+```
+(cons 1 2)
+```
+
+You can see from the return value above that Clojure writes a pair with the notation "(x . y)". A pair is basically a container that holds two things. Like any other type of object in the language, we can bind a pair to a variable in order to name it.
