@@ -73,3 +73,19 @@ Now when we run the expression "(+ x x)" the interpreter first looks up the valu
 ```
 (def my-addition (fn [x y] (+ x y)))
 ```
+Now we have a function named "my-addition" which is defined using the "fn" term we introduced above. Note an important fact, for Clojure there is no difference between binding a number like "1" to a variable-name like "x" or a function to a variable name like "my-addition". Functions are *first class*, they are simply a type of object in the system like any other.  
+
+```
+(def my-addition (fn [x y] (+ x y)))
+(my-addition 1 2)
+
+(def x 1)
+(my-addition x x)
+```
+
+Because we very frequently need to define procedures, Clojure provides a shorthand for doing this. Instead of writing "(def my-addition (fn [parameters] body))" in Clojure we can also write "(defn my-addition [parameters] body))", which means the same thing. 
+
+```
+(defn my-addition [x y] (+ x y))
+(my-addition 1 2)
+```
