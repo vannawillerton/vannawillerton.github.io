@@ -53,15 +53,15 @@ How can we use a $$\lambda$$-defined procedure? Consider the following example.
 
 This is a little hard to parse at first, but with a little effort you can see that this code snippet is similar to "(+ 1 2)" but with "+" replaced with the procedure definition "(fn [x y] (+ x y))". In this example, the procedure is constructed and them immediately applied to the arguments "1" and "2" to compute the output value "3", and then "forgotten" by the interpreter. How can we make a function that doesn't disappear?
 
-## Naming things with "defn"
+## Naming things with "def"
 
-In Clojure we can create named variables with the `defn` primitive. 
+In Clojure we can create named variables with the "def" primitive. 
 
 ```
 (defn x 1)
 ```
 
-"define" *binds* the value "1" to the variable called "x".
+"def" *binds* the value "1" to the variable called "x".
 
 ```
 (+ x x)
