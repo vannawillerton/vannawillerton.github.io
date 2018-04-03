@@ -89,3 +89,18 @@ Because we very frequently need to define procedures, Clojure provides a shortha
 (defn my-addition [x y] (+ x y))
 (my-addition 1 2)
 ```
+
+## Some basic datatypes
+
+### Symbols
+So far we have seen two datatypes in our system: numbers like "1" and "2" and functions returned by "fn". Actually, we have seen another basic type: variable names used in "def" statements and "fn" definitions like "x" and "my-addition". This kind of object is called a *symbol* in LISP. When the Scheme interpreter sees a symbol it assumes this is a variable and it tries to look up the value for that variable. If the variable has not been bound to value, you will get an error.
+
+```
+some-symbol
+```
+
+What if we want to talk about the symbol itself, instead of always assuming that it is the name of a variable bound to some value? In this case, we can use the "quote" procedure. The quote procedure takes its argument and returns a *quoted* version of that argument. Quoted values are treated **as is** by the interpreter. That is, they are their own value. 
+
+```
+(quote some-symbol)
+```
