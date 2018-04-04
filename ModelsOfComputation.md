@@ -50,7 +50,7 @@ How can we use a $$\lambda$$-defined procedure? Consider the following example.
 ((fn [x y] (+ x y)) 1 2)
 ```
 
-This is a little hard to parse at first, but with a little effort you can see that this code snippet is similar to "(+ 1 2)" but with "+" replaced with the procedure definition "(fn [x y] (+ x y))". In this example, the procedure is constructed and them immediately applied to the arguments "1" and "2" to compute the output value "3", and then "forgotten" by the interpreter. How can we make a function that doesn't disappear?
+This is a little hard to parse at first, but with a little effort you can see that this code snippet is similar to "(+ 1 2)" but with "+" replaced with the procedure definition "(fn [x y] (+ x y))". In this example, the procedure is constructed and them immediately applied to the arguments "1" and "2" to compute the output value "3", and then "forgotten" by the language. How can we make a function that doesn't disappear?
 
 ## Naming things with "def"
 
@@ -67,7 +67,7 @@ In Clojure we can create named variables with the "def" primitive.
 (+ x x)
 ```
 
-Now when we run the expression "(+ x x)" the interpreter first looks up the value of the variable "x" and then applies the function "+" to this value (twice). We can also use "def" to name functions created with "fn".
+Now when we run the expression "(+ x x)" the language first looks up the value of the variable "x" and then applies the function "+" to this value (twice). We can also use "def" to name functions created with "fn".
 
 ```
 (def my-addition (fn [x y] (+ x y)))
@@ -98,7 +98,7 @@ So far we have seen two datatypes in our system: numbers like "1" and "2" and fu
 some-symbol
 ```
 
-What if we want to talk about the symbol itself, instead of always assuming that it is the name of a variable bound to some value? In this case, we can use the "quote" procedure. The quote procedure takes its argument and returns a *quoted* version of that argument. Quoted values are treated **as is** by the interpreter. That is, they are their own value. 
+What if we want to talk about the symbol itself, instead of always assuming that it is the name of a variable bound to some value? In this case, we can use the "quote" procedure. The quote procedure takes its argument and returns a *quoted* version of that argument. Quoted values are treated **as is** by the language. That is, they are their own value. 
 
 ```
 (quote some-symbol)
@@ -154,7 +154,7 @@ The result of evaluating the expression above is a list with a procedure in the 
 (eval (list (fn [x y] (+ x y)) 1 2))
 ```
 
-We can also quote a list to prevent the interpreter from treating it as a combination. 
+We can also quote a list to prevent the language from treating it as a combination. 
 
 ```
 '(1 2 3)
