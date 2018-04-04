@@ -92,7 +92,7 @@ Because we very frequently need to define procedures, Clojure provides a shortha
 ## Some basic datatypes
 
 ### Symbols
-So far we have seen two datatypes in our system: numbers like "1" and "2" and functions returned by "fn". Actually, we have seen another basic type: variable names used in "def" statements and "fn" definitions like "x" and "my-addition". This kind of object is called a *symbol* in LISP. When the Scheme interpreter sees a symbol it assumes this is a variable and it tries to look up the value for that variable. If the variable has not been bound to value, you will get an error.
+So far we have seen two datatypes in our system: numbers like "1" and "2" and functions returned by "fn". Actually, we have seen another basic type: variable names used in "def" statements and "fn" definitions like "x" and "my-addition". This kind of object is called a *symbol* in LISP. When Clojure sees a symbol it assumes this is a variable and it tries to look up the value for that variable. If the variable has not been bound to value, you will get an error.
 
 ```
 some-symbol
@@ -109,7 +109,7 @@ What if we want to talk about the symbol itself, instead of always assuming that
 my-variable
 ```
 
-In the expression above, we created a variable called "my-variable" and bound it to the value of the expression "(quote some-symbol)". We then asked Clojure to interpret the symbol "my-variable". The language assumed that the symbol "my-variable" was a variable, and looked up its value which, thanks to the quote, was the **symbol** "my-symbol". Since we frequently want to quote expressions, Scheme provides a shorthand for this. Any expression preceded by a single quote "'" is considered to be quoted in the language.
+In the expression above, we created a variable called "my-variable" and bound it to the value of the expression "(quote some-symbol)". We then asked Clojure to interpret the symbol "my-variable". The language assumed that the symbol "my-variable" was a variable, and looked up its value which, thanks to the quote, was the **symbol** "my-symbol". Since we frequently want to quote expressions, Clojure provides a shorthand for this. Any expression preceded by a single quote "'" is considered to be quoted in the language.
 
 ```
 'some-symbol
