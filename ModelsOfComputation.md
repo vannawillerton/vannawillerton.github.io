@@ -256,9 +256,9 @@ Let's look at another example of recursion.
 
 ```
 (def sum (fn [l]
-     (if (empty? l)
-         0
-         (+ (first l) (sum (rest l)))))
+           (if (empty? l)
+             0
+             (+ (first l) (sum (rest l))))))
 
 ```
 
