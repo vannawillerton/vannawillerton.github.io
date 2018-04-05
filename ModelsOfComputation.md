@@ -239,10 +239,11 @@ In the example above, we called "map" with two arguments. First, we passed in an
 
 ```
 (def my-map (fn [f l]
-  (if (empty? l)
-      '()
-      (cons (f (first l))
-            (my-map f (rest l)))))
+              (if (empty? l)
+                '()
+                (cons (f (first l))
+                  (my-map f (rest l))))))
+
 
 (my-map (fn [x] (+ 1 x)) '(1 2 3 4 5 6))
 ```
