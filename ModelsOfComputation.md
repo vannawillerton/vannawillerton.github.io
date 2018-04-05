@@ -142,6 +142,15 @@ We can also use the unfortunately named "cons" procedure in order create a new l
 (cons 0 (list 1 2 3))
 ```
 
+The procedure "rest" can be thought of as the opposite of "cons". It returns a list with the first element removed.
+
+```
+(rest (list 0 1 2 3))
+
+(rest (cons 0 (list 1 2 3)))
+
+```
+
 A combination is just a list with a procedure in the first position.
 
 ```
@@ -169,6 +178,8 @@ There is an important special case of lists in LISP which is usually written "'(
 (list)
 ```
 
+
+
 ### Booleans
 
 Another important datatype in LISP are *boolean values* *true* and *false*. In Clojure these are written "true" and "false". For example, we can check the equality of two objects with the "=" procedure which returns if the two objects are the same (structurally) and false otherwise. 
@@ -189,11 +200,55 @@ In LISP, programmers usually follow the convention that boolean-valued functions
 
 ### The Structure of Lists and Recursion
 
-The examples above show how lists are the basic datastructure used to define LISP programs and how they can be built using the "list" constructor or quoting. But what is a list really? In LISP, lists are represented internally using a representation known as a *linked list*. Really, a list in LISP is just a sequence of pairs where the last element in the sequence is the empty list like this: "(cons 1 (cons 2 (cons 3 (cons '1 ())))"
+The examples above show how lists can be built using the "list" constructor or quoting. One useful way of thinking of a list is just as a sequence of pairs where the last element in the sequence is the empty list like this: "(cons 1 (cons 2 (cons 3 ()))"
 
 ```
-(cons 1 (cons 2 (cons 3 (cons 4 '()))))
-(list 1 2 3 4)
+(cons 1 (cons 2 (cons 3 '())))
+(list 1 2 3)
 ```
 
-Notice that the list above is just a pair of the value "1" and another list "(2 3 4)", and similarly this latter list is just a pair of the value "2" and another list "(3 4)", and so on, with the last element in the sequence being the empyt or null list "'()". 
+So "(list 1 2 3)" does indeed appear to be a pair of the value "1" and another list "(2 3)"; this latter list is just a pair of the value "2" and another list "(3)", and so on, with the last element in the sequence being the empty or null list "'()". (This is a literally accurate claim about the structure of lists in many LISP languages; in Clojure, the internal representations are more complicated, but this is still a useful picture to have.)
+
+We can use "first" and "rest" to navigate around this list.
+
+```
+(first (list 1 2 3))
+
+(rest (list 1 2 3))
+```
+
+The structure of lists is important because it goes hand in hand with the most important code design pattern used in the $$\lambda$$-calculus, and functional programming more generally: *recursion*. We can process a list by defining a function which does something to the first element of the list, and calls itself recursively on the rest of the list. The base case of such a recursive list processing procedure is the empty list "()".
+
+Before illustrating the concept of recursion. We need to introduce one more programming concept: *conditionals*. "Conditional" is a fancy word for an *if...then* structure. In Clojure, conditionals start with "if" and have three parts "(if  boolean-condition consequent alternative)". The boolean condition is any boolean expression. If it is true, the expression in the consequent position is evaluated and its value is returned as the value of the whole conditional expression. If the boolean condition is false the expression in the alternative is evaluated and its value is returned as the value of the whole conditional. Note that unlike in many imperative programming languages, conditionals have values in functional languages just like any other expression. 
+
+```
+(if (= 1 2) 'true 'false)
+
+(if (= 1 1) 'true 'false)
+```
+
+With conditionals, we are now ready to define recursive list-processing functions. One extremely important and basic list-processing function that exists in all functional languages is known as "map". "map" is a *high-order* function which takes to arguments: "(map f l)". First, it takes a one-place procedure "f" and second it takes a list "l". It then returns the list that results from applying "f" to each element of "l". 
+
+```
+(map (fn [x] (+ x 1) ) '(1 2 3 4 5 6))
+```
+
+In the example above, we called "map" with two arguments. First, we passed in an unnamed or *anonymous* function "(fn [x] (+ x 1))" which simply adds one to whatever it is passed as an argument. Second, we passed in the list "(1 2 3 4 5 6)". "map" applied this anonymous function to each element of the list and returned the result. 
+
+"map" is a standard function in all functional programming languages because it is a common use case for iteration. But it is easy to define it ourselves using recursion.
+
+```
+(def my-map (fn [f l]
+  (if (empty? l)
+      '()
+      (cons (f (first l))
+            (my-map f (rest l)))))
+
+(my-map (fn [x] (+ 1 x)) '(1 2 3 4 5 6))
+```
+
+Let's go through this function definition. First, the function takes two arguments "f" another function, and a list "l". The body of the procedure is a conditional. This conditional first checks if the list "l" is the empty list using the built in procedure "empty?". If the list passed to "my-map" is empty, then the result must also be empty, so we set the consequent of the conditional to just the empty list. On the other hand, if there are elements in the list "l", we need to do more work.
+
+The alternative to the conditional first gets the first elements of "l" with "first", i.e., "(first l)" and it then applies the function "f" to this element. Second, it calls itself on the remainder of the list which it gets using "rest". Finally, it takes the result of these two operations and creates a pair from these using "cons". 
+
+It is impossible to exaggerate how important this kind of recursion is for models of natural language structure, as we will see in subsequent parts of the course.
