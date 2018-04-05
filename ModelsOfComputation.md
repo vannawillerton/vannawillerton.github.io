@@ -252,4 +252,16 @@ Let's go through this function definition. First, the function takes two argumen
 
 The alternative to the conditional first gets the first elements of "l" with "first", i.e., "(first l)" and it then applies the function "f" to this element. Second, it calls itself on the remainder of the list which it gets using "rest". Finally, it takes the result of these two operations and creates a pair from these using "cons". 
 
+Let's look at another example of recursion.
+
+```
+(def sum (fn [l]
+     (if (empty? l)
+         0
+         (+ (first l) (sum (rest l)))))
+
+```
+
+This function takes a list of numbers, and returns the sum of those numbers. The recursion in this definition says something very simple (but important) about summing a list: the sum of a list is equal to the first number in the list plus *the sum of the rest of the list*.
+
 It is impossible to exaggerate how important this kind of recursion is for models of natural language structure, as we will see in subsequent parts of the course.
