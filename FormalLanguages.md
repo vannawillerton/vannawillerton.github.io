@@ -233,7 +233,7 @@ Consider again our formal language $$\{[ab]\}^*$$, how can we construct the stri
 
 ```
 (defn generate-abn [n]
-  (if (=s n 0)
+  (if (= n 0)
       '()
       (concat '(a b) (generate-abn (- n 1)))))
 (generate-abn 10)
