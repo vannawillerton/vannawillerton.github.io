@@ -190,3 +190,67 @@ Consider the following sentences.
 >Alice talked to the father of the mother of the father of the mother of Bob.
 
 >Alice talked to the father of the father of the mother of the mother of Bob. -->
+
+# Computational Models of Infinite Formal Languages
+
+We saw in the preceding section that we cannot use finite formal languages as models of natural language sentences. At the very least, we will need  infinite formal languages to model some natural languages like English. But how do we define an infinite language?  
+
+It is here that our notion of a model of computation become indispensable. While we cannot directly list the elements of an infinite formal language, we can write a computer program that *characterizes* the set in some way. 
+
+Take the example of the formal language $$L=\{[ab]\}^*$$, that is, the set of all strings which consist of sequences of $$[ab]$$, e.g., $$\{[ab], [abab], [abab], [ababab], ...\}$$. How could we characterize this set with a computer program? In general, there are two main approaches. 
+
+## Language Recognizers
+
+First we could write a computer program which tells us whether or not a given string was in this language. This approach is called *language recognition*. How do we write a recognizer for the language $$L=\{[ab]\}^*$$?
+
+```
+(defn lang-ab*? [str]
+    (if (empty? str) 
+        true
+        (if (prefix? '(a b) str)
+            (lang-ab*? (rest (rest str)))
+            false)))
+```
+
+There is a lot going on in this example, so let's break it down. The function is recursive. The most basic case is if the string is empty, that is if the formal string is equal to $$[]$$.
+
+```
+(lang-ab*? '())
+```
+
+Next consider the case where the string isn't empty. Now, we need to check if the beginning of the string is equal to $$[ab]$$. If it isn't, then the result is simply false.
+
+```
+(lang-ab*? '(b b a b))
+```
+
+## Language Generators
+
+Another way to specify a formal language using a computer program is by *generation*&mdash;providing a program which constructs or generates the 
+elements of the set. 
+
+Consider again our formal language $$\{[ab]\}^*$$, how can we construct the strings in this set? If we knew the number of copies $$n$$ of the string $$[ab]$$ in advance, we could easily write a procedure that generated the target string.  
+
+```
+(defn generate-abn [n]
+  (if (=s n 0)
+      '()
+      (conj '(a b) (generate-abn (- n 1)))))
+(generate-abn 10)
+```
+
+Of course, this procedure doesn't generate the **whole** set $$\{[ab]\}^*$$. However, in a certain sense it does precisely characterize the entire set. In particular, this function provides a mapping from an infinite set which we understand well, the natural (or counting) numbers to the set of strings in $$\{[ab]\}^*$$. For each natural number $$n$$, it returns a single element of $$\{[ab]\}^*$$.
+
+There are at least two ways in which we can use such a mapping.
+
+First, since we know how to count from $$0$$ to any natural number, no matter how high, we could use this procedure to generate any element of the set if we are willing to wait long enough. This perspective on characterizing the infinite set is known as *enumeration*. 
+
+Second, we are free to imagine that there is another, unknown, process which somehow chooses the natural number $$n$$. This choice process can work in any way, and does not need to be known to us. The important thing is that however we choose $$n$$ we get a member of the set $$\{[ab]\}^*$$, and we can choose whatever $$n$$ we like. This perspective is called *nondeterministic choice*. 
+
+In some sense, the nondetermistic choice perspective is a more fundamental characterization of the set. When we think about the language $$\{[ab]\}^*$$, the order in which we list the elements doesn't matter. But to enumerate the set, we have to pick some particular ordering of $$n$$ (for instance counting from $$0$$ up). The nondeterministic choice perspective emphasizes that we don't really care how you pick this order; we just care which ones are in the set and which ones are not.
+
+Recognizers and generators are both ways of characterizing sets *intensionally* rather than *extensionally*, that is, by listing. They  differ in one important way. While recognizers give you a *yes* or *no* answer (when the language is *decidable* in any case), generators only give you a characterization for the strings that are actually **in** the language. 
+
+# Generative Models of Language
+
+Modern linguistics is often called *generative linguistics*. This name stems from the use of generators as models of linguistic structure. As we will see, the field actually uses both the generator and recognizer perspectives to define models of language. This dual perspective also corresponds to the dual problem of explaining both language production (generation) and comprehension (recognition).  The important thing is that we will try to define finite programs that **characterize** the set of possible English sentences. In the next lecture we will start building such models of natural language sentence structure. 
