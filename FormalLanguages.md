@@ -77,8 +77,33 @@ my-string
 
 ## Concatenation
 
-We have already seen how we can build up lists by using "cons" together with the null string "'()". When using `cons` to build a string of symbols, we pass in two arguments: a symbol and another string.
+We have already seen how we can build up lists by using "cons" together with the null string "'()". When using "cons" to build a string of symbols, we pass in two arguments: a symbol and another string.
 
 ```
 (cons 'a my-string)
+```
+
+Can we use "cons" to define concatenation? What happens if we "cons" two strings together?
+
+```
+(cons '(a b) '(a b))
+```
+
+We have ended up with a pair consisting of two string, rather than a single string with the elements of both. This is not the desired behavior as an implementation of concatenate. Clojure has a primitive operation which takes two strings and produces the result of putting them together to make a single string called "concat" which will use as our implementation of concatenate.
+
+```
+(concat '(a b) '(a b))
+```
+
+We can also define a predicate "prefix?" which tests whether on string is a prefix of another.
+
+```
+(defn prefix? [pr str]
+  (if (> (count pr) (count str))
+      false
+      (if (empty? pr)
+          true
+          (if (= (first pr) (first str))
+              (prefix? (rest pr) (rest str))
+              false))))
 ```
