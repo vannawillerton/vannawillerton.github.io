@@ -44,9 +44,9 @@ set. As an example, we might have a small vocabulary only consisting of the thre
 
 To begin studying possible and impossible sentences, we will need some notion of a sequence of words. In formal language theory, this is called a *string* and is any *finite* sequence of symbols in $$W$$. For simplicity, let $$V = \{a,b\}$$. Note that we will use square brackets to indicate strings. Some strings *over* this lexicon (or alphabet) are $$[a]$$, $$[aaaab]$$, $$[ababababa]$$, etc. One reason we use brackets to indicate strings is so as not to confuse a string $$[a]$$ with a single symbol from the symbol itself $$a$$. We will sometimes use variable $$x, y, z, ...$$ to refer to strings over the vocabulary $$V$$. 
 
-The *length* of a string $$|x|$$ is the number of symbols in the string. For example, $$|[aba]|=3$$.
+The *length* of a string $$\mid x \mid$$ is the number of symbols in the string. For example, $$\mid [aba] \mid=3$$.
 
-There is a special, unique string called the *null string* that has length $$0$$ and is written $$[]$$, i.e., $$|[]|=0$$. In traditional notation, the null string is usually written $$\epsilon$$, but our notation makes its properties clearer. This string always exists over any lexicon. 
+There is a special, unique string called the *null string* that has length $$0$$ and is written $$[]$$, i.e., $$\mid [] \mid=0$$. In traditional notation, the null string is usually written $$\epsilon$$, but our notation makes its properties clearer. This string always exists over any lexicon. 
 
 <!-- todo: write the length function recursively -->
 
@@ -59,7 +59,7 @@ When talking about sets of strings, we will take the empty set $$\emptyset$$ to 
 
 The basic operation that we can perform on strings is *concatenation*. If we have two string variables $$x$$ and $$y$$ we write the concatenation like $$x \cdot y$$, or sometimes just $$xy$$. If we are talking some actual strings $$[ab]$$ and $$[ba]$$ we will write $$[ab]\cdot[ba]=[abba]$$.
 
-Concatenation is associative, which means it doesn't matter what order you do it in, i.e., $$(xy)z=x(yz)$$, and the null string is an *identity* for the operation which means concatenating the empty string on anything gives you back the empty string  $$x \cdot []=[] \cdot x=x$$. The length of a concatenated pair of string is the sum of the lengths of each $$|xy|=|x|+|y|$$.
+Concatenation is associative, which means it doesn't matter what order you do it in, i.e., $$(xy)z=x(yz)$$, and the null string is an *identity* for the operation which means concatenating the empty string on anything gives you back the empty string  $$x \cdot []=[] \cdot x=x$$. The length of a concatenated pair of string is the sum of the lengths of each $$\mid xy \mid= \mid x \mid + \mid y \mid$$.
 
 We write $$x^n$$ for $$n$$ concatenations of the string $$x$$. So if $$x=[ab]$$, $$x^3=[ababab]$$, $$x^1=[ab]$$, and $$x^0=[]$$.
 
@@ -235,7 +235,7 @@ Consider again our formal language $$\{[ab]\}^*$$, how can we construct the stri
 (defn generate-abn [n]
   (if (=s n 0)
       '()
-      (conj '(a b) (generate-abn (- n 1)))))
+      (concat '(a b) (generate-abn (- n 1)))))
 (generate-abn 10)
 ```
 
