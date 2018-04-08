@@ -106,4 +106,87 @@ We can also define a predicate "prefix?" which tests whether on string is a pref
           (if (= (first pr) (first str))
               (prefix? (rest pr) (rest str))
               false))))
+
+(prefix? '(a b c) '(a b))
 ```
+
+# Formal Languages
+
+So far we have defined the formal notion of a string as a model of word sequences in natural language. Our initial goal was however to be able to distinguish between grammatical strings like *colorless green ideas sleep furiously* and $$^*$$*furiously green sleep ideas colorless*. How can we capture this distinction?
+
+One simple way to distinguish between well-formed strings and ill-formed strings is simply to define the well-formed strings as constituting a set, called a *formal language*, $$L$$. Recall that $$[V]^*$$ is the set of all possible strings over some vocabulary $$V$$. Thus a formal language is simply any subset of $$[V]^*$$. For any pair of formal languages, $$L$$ and $$L^\prime$$ we define the following usual set-theoretic definitions. 
+
+$$x \in L$$ means that the string $$x$$ is an *element of* the language $$L$$.
+
+$$L \cup L'$$ is the *union* of the two formal languages, that is, the set of all strings in one language or the other or both. It can be computed by adding the two sets together and removing copies. 
+
+$$L \cap L'$$ is the *intersection* of the two formal languages, that is, the set of all strings in both languages. It can be computed by taking each string in $$L$$, checking if it is also in $$L^\prime$$, and keeping it if it is, otherwise throwing it away.
+
+$$\sim L$$ is the *complement in $$[V]^*$$* of $$L$$, that is, it is the set of all possible strings over our lexicon $$W$$ that **are not** in $$L$$. Since there are an infinite number of strings in $$W^*$$, this set may not be easy to compute. 
+
+A perhaps more unusual definition is the *concatenation* of two formal languages: $$L \cdot L'$$. We have already seen what it means to concatenate two strings $$x$$ and $$y$$ to form $$xy$$. What does it mean to concatenate to **sets** of strings? The concatenation of two formal languages is defined by taking every string in the first language and concatenating it to every string in the second language, that is, it is the set $$\{xy\ |\ x \in L \wedge y \in L' \}$$. Note that if there are $$5$$ strings in $$L$$ and $$10$$ strings in $$L'$$ there will be $$50$$ strings in $$L \cdot L'$$ since we concatenate every string in $$L'$$ to every string in $$L$$.
+
+We write $$L^n$$ for $$n$$ concatenations of the language $$L$$ to itself and $$L^*$$ for the set of strings that results from concatenating $$L$$ to itself $$n$$ times for all $$n$$. If we consider the set $$W$$ to consist of all the length one strings in our lexicon, e.g.,  $$\{[a], [b]\}$$, then we see why $$[V]^*$$ is the set of possible strings over our vocabulary.
+
+## Some Examples of Formal Language
+
+Some important formal languages we will encounter in this course include the following. The set of all alternating $$a$$s and $$b$$s, $$[ab]^n$$. The set of all string with $$n$$ $$a$$'s followed by $$n$$ $$b$$s, i.e., $$a^n b^n$$, which we will call the *counting language*. The set of all strings over a vocabulary $$V$$ plus one copy of themselves, i.e., $$xx$$, which we will call the *copy language* and the set of all strings over $$V$$ plus their reversal $$xx^R$$ where $$x^R$$ means the reversal of $$x$$. We will see that many of these formal languages have special properties related to natural language.
+
+## A First Model of Well-Formed and Ill-formed Sentences
+
+We have now defined the notion of a formal language. How can we use it to characterize the idea of well-formed and ill-formed sentences? One easy way is to say that all the well formed sentences are within some formal language $$L$$ and all other possible strings $$\sim L$$ are ill-formed. 
+
+This is a good start, but how do we say which sentences are within $$L$$. As a first idea, if the set $$L$$ is finite, we can just list it. For example, if our lexicon is $$W = \{a,b\}$$, we could define $$L=\{[a],[aba],[bbb],[ab]\}$$. How will this work out as a model of well-formed sentences?
+
+Let us consider a very restricted subset of the English language. We will start with a single sentence:
+>Alice talked to the father of Bob.
+
+
+This is clearly a grammatical sentence in the English language, and we can use it as the basis for a sequence of longer and longer sentences:
+
+>Alice talked to the father of the mother of Bob.
+
+>Alice talked to the father of the mother of the father of Bob.
+
+>Alice talked to the father of the father of the mother of Bob.
+
+>Alice talked to the father of the mother of the father of the mother of Bob.
+
+>Alice talked to the father of the father of the mother of the mother of Bob.
+
+
+These sentences were constructed by adding the prepositional phrases *of the mother* and *of the father* to the base sentence. It is clear that each of these new sentences is grammatical, and there is no reason to stop after only four iterations of this process: In principle we can insert these prepositional phrases as many times as we want, and the resulting sentence will be grammatical. 
+
+In order to characterize this subset of English, we can try to simplify the strings we are talking about. Let's define a function from strings of English words to strings over the vocabulary 
+$$\{[],[a],[b]\}^*$$ (i.e., $$E^* \mapsto \{[],[a],[b] \}^* $$) called a *systematic relabelling* or *homomorphism*. <!--- $$h$$ with the property that $$h(x \cdot y)= h(x)\cdot h(y)$$. This property just says that we can take two strings, concatenate them and push them through this function or we can push the two things through the function and then concatenate them in the new set, and either way we get the same answer. It encodes the idea of *preserving* the structure of concatenation in the source set. -->
+
+It is not hard to show (though we won't) that any functions from English strings to $$\{[],[a],[b]\}^*$$ that has this property can be defined by saying which string in $$\{[],[a],[b]\}^*$$ each word of English $$E$$ maps to, that is, we can define this function by giving a mapping for each length one string and the null string in the vocabulary of English.
+
+Let's define $$h$$.  Every time that we see the word *father*, we will replace it with the character $$a$$, and every time we see the word *mother*, we will replace it with the character $$b$$. Every other word, we will ignore (i.e., we will delete it). 
+
+$$\begin{eqnarray}
+h([]) & = & []\\
+h([father]) & = &[a]\\
+h([mother]) & = & [b]\\
+h(x) & = & []\ \forall\ [x] \notin \{[],[father],[mother]\}
+\end{eqnarray}$$
+
+The first sentence, containing only one instance of *father*, will then be transformed to the string $$a$$. The second sentence, containing *father* and then *mother*, will be transformed to $$ab$$. Continuing in this manner, we see that this fragment of English will get mapped to the language $$L = \{[],[a],[b],[ab],[ba],[aaa],[bbb],[baa],[aba],[baa],[aab],[abab],...\}$$. This language $$L$$ captures the  structure of these particular prepositional phrases. Notice that other sentences using the relevant words, like *the mother saw the father*, are also correctly mapped into strings in this language, even when they aren't used in prepositional phrases. Thus our homorphism is defined correctly for every sentence of English. It also clearly demonstrates that our fragment of English is potentially **infinite**&mdash;no finite list will contain all of its grammatical sentences.
+
+We must conclude that a formal language model of at least some natural languages, notably English, must be infinite. In formal language theory we often work with infinite languages like this. It is worth noting a few things. First, we are not arguing that every natural language must be infinite; we may find one that is finite. This is an empirical question. Second, our use of infinite languages is an idealization. Of course, no amount of English that we sample in the wild will be infinite, we will always observe just a finite subset of the language. The point is that there is particular bound on the length of sentences $$n$$ which makes sense to specify *a priori*. The infinite language captures our intuition that the process of sentence formation in English is *unbounded* the number of times you are allowed to do something is not specified in advance, not that there exists an actual infinite set of English sentences somewhere in the universe.
+
+<!-- TODO: we probably do want to do an alternating example, this one was not, but I think we want one to motivate the discussion below. -->
+
+<!-- ## A Second Example
+
+Consider the following sentences. 
+
+>Alice talked to John's father.
+
+>Alice talked to the father of the mother of the father of Bob.
+
+>Alice talked to the father of the father of the mother of Bob.
+
+>Alice talked to the father of the mother of the father of the mother of Bob.
+
+>Alice talked to the father of the father of the mother of the mother of Bob. -->
