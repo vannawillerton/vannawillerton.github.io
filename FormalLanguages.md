@@ -42,7 +42,7 @@ set. As an example, we might have a small vocabulary only consisting of the thre
 
 <!-- todo: what is the best notation and terminology to use for \Sigma and strings and whatnot -->
 
-To begin studying possible and impossible sentences, we will need some notion of a sequence of words. In formal language theory, this is called a *string* and is any *finite* sequence of symbols in $$W$$. For simplicity, let $$V = \{a,b\}$$. Note that we will use square brackets to indicate strings. Some strings *over* this lexicon (or alphabet) are $$[a]$$, $$[aaaab]$$, $$[ababababa]$$, etc. One reason we use brackets to indicate strings is so as not to confuse a string $$[a]$$ with a single symbol from the symbol itself $$a$$. We will sometimes use variable $$x, y, z, ...$$ to refer to strings over the vocabulary $$V$$. 
+To begin studying possible and impossible sentences, we will need some notion of a sequence of words. In formal language theory, this is called a *string* and is any *finite* sequence of symbols in $$V$$. For simplicity, let $$V = \{a,b\}$$. Note that we will use square brackets to indicate strings. Some strings *over* this lexicon (or alphabet) are $$[a]$$, $$[aaaab]$$, $$[ababababa]$$, etc. One reason we use brackets to indicate strings is so as not to confuse a string $$[a]$$ with a single symbol from the symbol itself $$a$$. We will sometimes use variable $$x, y, z, ...$$ to refer to strings over the vocabulary $$V$$. 
 
 The *length* of a string $$\mid x \mid$$ is the number of symbols in the string. For example, $$\mid [aba] \mid=3$$.
 
@@ -59,7 +59,7 @@ When talking about sets of strings, we will take the empty set $$\emptyset$$ to 
 
 The basic operation that we can perform on strings is *concatenation*. If we have two string variables $$x$$ and $$y$$ we write the concatenation like $$x \cdot y$$, or sometimes just $$xy$$. If we are talking some actual strings $$[ab]$$ and $$[ba]$$ we will write $$[ab]\cdot[ba]=[abba]$$.
 
-Concatenation is associative, which means it doesn't matter what order you do it in, i.e., $$(xy)z=x(yz)$$, and the null string is an *identity* for the operation which means concatenating the empty string on anything gives you back the empty string  $$x \cdot []=[] \cdot x=x$$. The length of a concatenated pair of string is the sum of the lengths of each $$\mid xy \mid= \mid x \mid + \mid y \mid$$.
+Concatenation is associative, which means it doesn't matter what order you do it in, i.e., $$(xy)z=x(yz)$$, and the null string is an *identity* for the operation which means concatenating the empty string on anything gives you back the same string:  $$x \cdot []=[] \cdot x=x$$. The length of a concatenated pair of string is the sum of the lengths of each $$\mid xy \mid= \mid x \mid + \mid y \mid$$.
 
 We write $$x^n$$ for $$n$$ concatenations of the string $$x$$. So if $$x=[ab]$$, $$x^3=[ababab]$$, $$x^1=[ab]$$, and $$x^0=[]$$.
 
@@ -126,7 +126,7 @@ $$\sim L$$ is the *complement in $$[V]^*$$* of $$L$$, that is, it is the set of 
 
 A perhaps more unusual definition is the *concatenation* of two formal languages: $$L \cdot L'$$. We have already seen what it means to concatenate two strings $$x$$ and $$y$$ to form $$xy$$. What does it mean to concatenate to **sets** of strings? The concatenation of two formal languages is defined by taking every string in the first language and concatenating it to every string in the second language, that is, it is the set $$\{xy \mid x \in L \wedge y \in L' \}$$. Note that if there are $$5$$ strings in $$L$$ and $$10$$ strings in $$L'$$ there will be $$50$$ strings in $$L \cdot L'$$ since we concatenate every string in $$L'$$ to every string in $$L$$.
 
-We write $$L^n$$ for $$n$$ concatenations of the language $$L$$ to itself and $$L^*$$ for the set of strings that results from concatenating $$L$$ to itself $$n$$ times for all $$n$$. If we consider the set $$W$$ to consist of all the length one strings in our lexicon, e.g.,  $$\{[a], [b]\}$$, then we see why $$[V]^*$$ is the set of possible strings over our vocabulary.
+We write $$L^n$$ for $$n$$ concatenations of the language $$L$$ to itself and $$L^*$$ for the set of strings that results from concatenating $$L$$ to itself $$n$$ times for all $$n$$. If we consider the set $$V$$ to consist of all the length one strings in our lexicon, e.g.,  $$\{[a], [b]\}$$, then we see why $$[V]^*$$ is the set of possible strings over our vocabulary.
 
 ## Some Examples of Formal Language
 
