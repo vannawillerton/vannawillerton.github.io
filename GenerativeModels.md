@@ -63,7 +63,7 @@ One way of specifying the probability of some corpus is by defining a *probabili
 Recall that in this code we left $$n$$ unspecified, a *nondeterministic choice*. One way to define a probability distribution is to replace nondeterministic choice with *random choice*. How can we do this? First, let's define a procedure called "flip" which flips a fair coin.
 
 ```
-(define (flip)
+(defn flip []
   (if (> (rand 1) 0.5)
       true
       false))
