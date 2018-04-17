@@ -93,7 +93,7 @@ Note that we have changed the name to begin with "sample-". Such a probabilistic
               (prefix? (rest pr) (rest str))
               false))))
 
-(defn lang-ab* [str]
+(defn lang-ab*? [str]
     (if (empty? str) 
         true
         (if (prefix? '(a b) str)
