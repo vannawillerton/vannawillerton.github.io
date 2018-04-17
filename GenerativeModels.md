@@ -79,3 +79,74 @@ Now we can change "generate-abn" by replacing the stopping condition with a rand
       (concat '(a b) (sample-ab*))))
 (sample-ab*)
 ```
+
+
+Note that we have changed the name to begin with "sample-". Such a probabilistic generator is known as a *sampler* and we will often use this naming convention when we write them. We can also write the probabilistic equivalent to *recognizer* for this language. Recall our original recognizer function.
+
+```
+(defn prefix? [pr str]
+  (if (> (count pr) (count str))
+      false
+      (if (empty? pr)
+          true
+          (if (equal? (first pr) (first str))
+              (prefix? (rest pr) (rest str))
+              false))))
+
+(defn lang-ab* [str]
+    (if (empty? str) 
+        true
+        (if (prefix? '(a b) str)
+            (lang-ab*? (rest (rest str)))
+            false)))
+
+(lang-ab*? '(a b a b))
+```
+
+What is the probabilistic equivalent of a recognizer? It is a function that returns not just whether a string is a language or not, but the **probability** of the string under the generative model. We call such functions *scoring functions*.
+
+```
+(defn score-ab* [str]
+    (if (empty str) 
+        0.5
+        (if (prefix? '(a b) str)
+            (* 0.5 (score-ab* (rest (rest str))))
+            0)))
+
+(score-ab* '(a b a b))
+```
+
+We will often use this naming convention "score-" for scoring functions. Note that what this function does is score a string under the generative model above.
+
+## Corpus Generators and Scorers
+
+With language samplers and scorers defined, we are now in a position to evaluate the *probability* or *score* of a dataset, or *likelihood* of the model which is a measure of well the model matches the *corpus frequencies* of the corpus.
+
+```
+(defn sample-corpus [generator size]
+  (if (= size 0)
+      '()
+      (cons (generator) (sample-corpus generator (- size 1)))))
+
+(sample-corpus sample-ab* 4)
+
+(defn sample-corpus-random [generator]
+  (if (flip)
+      '()
+      (cons (generator) (sample-corpus-random generator))))
+    
+(sample-corpus-random sample-ab*)
+
+(def my-corpus (list '(a b a b) '() '(a b) '(a b a b a b)))
+
+(defn score-corpus [scorer corpus]
+  (if (empty? corpus)
+      1.0
+      (* (scorer (first corpus)) (score-corpus scorer (rest corpus)))))
+
+(score-corpus score-ab* my-corpus)
+  
+```
+
+There is a close relationship between samplers and scorers. In particular, any corpus which is sampled by a generator can be scored by a scorer. The score of that corpus is simply the probably that the generator *would* have generated it in the first under random chance. This connection is absolutely crucial to understanding how probabilities can be used for learning and inference, as we will see in upcoming lectures. 
+
