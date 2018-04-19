@@ -86,3 +86,45 @@ The second is the function "apply" which takes a function and a **list** of para
 
 The function "sample-categorical" flips a coin to see if it should return the first object, if the coin comes up true it returns that object. Otherwise, it recurses on the rest of the objects and a **normalized** version of the remaining probabilities. One way to understand this is to realize that the categorical sampler always needs a properly normalized  distribution. But why is the right way to define this? We will see below.
   
+## Scoring a Categorical Distribution
+
+Now we have seen how to sample from a categorical distribution, how can we score a sample from a categorical distribution? In some sense, scoring a categorical distribution is trivial, since if we see an observation which is an instance of outcome $$i$$ in the support of the categorical, it's probability is just $$\theta_i$$, i.e., the probability of outcome $$i$$ in the parameter vector of the distribution. 
+
+```
+(def vocabulary '(call me Ishmael))
+(def probabilities (list (/ 1 3) (/ 1 3 ) (/ 1 3 )))
+(defn score-categorical [outcome outcomes params]
+  (if (empty? params)
+      (error "no matching outcome")
+      (if (= outcome (first outcomes))
+          (first params)
+          (score-categorical outcome (rest outcomes) (rest params)))))
+
+(score-categorical 'me vocabulary probabilities)
+```
+
+# Log Probabilities and Surprisal
+
+
+When working with probability distributions in practice, we often need to compute large products of probabilities. Since probabilities are numbers between $$0$$ and $$1$$, often very small numbers, we can quickly get *underflow errors*. As numbers get very close to zero, they can drop below the level of precision provides by standard floating point representations.  
+For this reason, we typically work with *log probabilities*.  
+
+
+Log probabilities are simply the logarithms of probabilities. In this course, we will typically usually use the logarithm with base $$2$$ for log probabilities. Recall that the logarithm $$\log_2(x)$$ is the number of times that you would need to multiply $$2$$ by itself to get $$x$$. Since probabilities are numbers between $$0$$ and $$1$$ then the logarithm of a probability is necessarily negative since we are asking how many times we need to multiply $$\frac{1}{2}$$ by itself to reach $$x$$. Thus, log probabilities are numbers between $$-\infty$$, i.e., $$\mathrm{log}(0)$$ and $$0$$, i.e.,  $$\mathrm{log}(1)$$. 
+
+
+Logarithms are useful because they give us a new way of representing numbers: in terms of exponentiation of a base. Instead of thinking about a number as the number of times you need to add $$1$$ to itself to get there, you can think about it as the number of times you have to multiple $$2$$ by itself to get there. In the log domain, addition corresponds to multiplication of the exponentiated logarithms. That is:
+
+$$\log(p_1 \times p_2 \times p_3) = \log(p_1) + \log(p_2) + \log(p_3)$$
+
+Since we are often computing products in probability theory, it is often useful to work in the log domain and, instead compute sums. 
+
+Since the logarithms of very small probabilities (i.e., probabilities close to $$0$$) are negative numbers with very large absolute values, they can avoid underflow errors.
+
+There is one disadvantage, however, which is that to add log probabilities, we have no choice but to exponentiate. We usually define a function called "logsumexp" to do this. 
+
+```
+ (defn logsumexp [. log-vals]
+   (log (apply + (map exp log-vals))))
+ (logsumexp (log 0.23) (log 0.2))
+ ```
