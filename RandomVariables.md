@@ -57,17 +57,32 @@ $$X \sim \mathrm{categorical}(\theta)$$
 How can we write a sampler for categorical distributions in our language?
 
 ```
-
 (defn normalize [params]
-  (let ((sum (apply + params)))
-    (map (lambda (x) (/ x sum)) params)))
-(+ 1 2 3)
+  (let [sum (apply + params)]
+    (map (fn [x] (/ x sum)) params)))
+(normalize (list 2 1 1))
 
-(define (sample-categorical outcomes params)
-  (if (flip (car params))
-      (car outcomes)
-      (sample-categorical (cdr outcomes) 
-                          (normalize (cdr params)))))
+(defn sample-categorical [outcomes params]
+  (if (flip (first params))
+      (first outcomes)
+      (sample-categorical (rest outcomes) 
+                          (normalize (rest params)))))
 
-(sample-categorical '(call me Ishmael) '(.5 .25 .25))
+(sample-categorical '(call me Ishmael) (list .5 .25 .25))
 ```
+
+There are a few new things we have introduced here. First, we have defined a function calles "normalize" which takes a list of numbers and *normalizes* them, i.e. makes it so that they add to $1$. This function uses two new programming ideas.
+
+The first is the "let" statement. The "let" statement gives us a local variable binding and used like this:
+
+"(let [var1 expression1
+      var2 expression2
+      ...]
+  body)"
+  
+Here "var1" etc. are variables whose values are bound to the values of the correspoding expressions. These variables can then be used in the body of the let statement, whose overall value is the result of evaluating the body. 
+
+The second is the function "apply" which takes a function and a **list** of parameters to that function and applies the function to the list. Why do we use "(apply + params)" in the code above? This is because normally we would call the "+" function with a combination like "(+ 1 2 3)", but here we have access to a **list** called "params" containing the arguments. 
+
+The function "sample-categorical" flips a coin to see if it should return the first object, if the coin comes up true it returns that object. Otherwise, it recurses on the rest of the objects and a **normalized** version of the remaining probabilities. One way to understand this is to realize that the categorical sampler always needs a properly normalized  distribution. But why is the right way to define this? We will see below.
+  
