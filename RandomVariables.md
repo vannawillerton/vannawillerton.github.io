@@ -42,7 +42,7 @@ Crucially, $$P$$ here should be thought of as a higher-order function which take
 
 $$P(X=\mathrm{\#t}) = p(\mathrm{\#t}) = \theta$$
 
-Often, people write $$P(X)$$ $$\{p(x) | x \in X\}$$ to refer to the whole distribution over the random variable $$X$$. 
+Often, people write $$P(X) = \{p(x) | x \in X\}$$ to refer to the whole distribution over the random variable $$X$$. 
 
 
 # The Categorical Distribution
