@@ -71,7 +71,7 @@ How can we write a sampler for categorical distributions in our language?
 (sample-categorical '(call me Ishmael) (list .5 .25 .25))
 ```
 
-There are a few new things we have introduced here. First, we have defined a function calles "normalize" which takes a list of numbers and *normalizes* them, i.e. makes it so that they add to $1$. This function uses two new programming ideas.
+There are a few new things we have introduced here. First, we have defined a function calles "normalize" which takes a list of numbers and *normalizes* them, i.e. makes it so that they add to $$1$$. This function uses two new programming ideas.
 
 The first is the "let" statement. The "let" statement gives us a local variable binding and used like this:
 
