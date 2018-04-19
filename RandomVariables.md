@@ -124,7 +124,7 @@ Since the logarithms of very small probabilities (i.e., probabilities close to $
 There is one disadvantage, however, which is that to add log probabilities, we have no choice but to exponentiate. We usually define a function called "logsumexp" to do this. 
 
 ```
- (defn logsumexp [. log-vals]
-   (log (apply + (map exp log-vals))))
+ (defn logsumexp [& log-vals]
+   (log (apply + (map Math/exp log-vals))))
  (logsumexp (log 0.23) (log 0.2))
  ```
