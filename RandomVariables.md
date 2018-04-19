@@ -12,9 +12,9 @@ One of the most basic probability distributions is the *Bernoulli distribution* 
 
 ```
 (defn flip [weight]
-  (if (< (random 100) (* weight 100))
-      #t
-      #f))
+  (if (< (rand 1) weight)
+      true
+      false))
 (def my-random-variable (flip 0.05))
 my-random-variable
 ```
@@ -55,3 +55,19 @@ $$X \sim \mathrm{categorical}(\theta)$$
 
 ## Sampling from a Categorical Distribution
 How can we write a sampler for categorical distributions in our language?
+
+```
+
+(defn normalize [params]
+  (let ((sum (apply + params)))
+    (map (lambda (x) (/ x sum)) params)))
+(+ 1 2 3)
+
+(define (sample-categorical outcomes params)
+  (if (flip (car params))
+      (car outcomes)
+      (sample-categorical (cdr outcomes) 
+                          (normalize (cdr params)))))
+
+(sample-categorical '(call me Ishmael) '(.5 .25 .25))
+```
