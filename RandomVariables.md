@@ -32,18 +32,18 @@ Since probability is a tool used across mathematics, engineering, and the scienc
 
 When $$X$$ is a random variable distributed according to some known distribution, such as Bernoulli, we often write the following. 
 
-$$$$X \sim \mathrm{Bernoulli}(\theta)$$$$
+$$X \sim \mathrm{Bernoulli}(\theta)$$
 
 This is read $$x$$ *is distributed as* a Bernoulli distribution with *parameter* (i.e., weight) $$\theta$$. Another standard notation is to use $$P(X=x)$$ to refer to the probability that random variable $$X$$ takes on value $$x$$. 
 
-$$$$P(X=\mathrm{\#t}) = \theta$$$$
+$$P(X=\mathrm{\#t}) = \theta$$
 
 Crucially, $$P$$ here should be thought of as a higher-order function which takes a predicate $$X=\mathrm{\#t}$$ and returns the probability that that predicate is true. Often lower case $$p$$ and $$q$$ are used to refer to the probability mass functions associated with random variables, i.e., 
 
-$$$$P(X=\mathrm{\#t}) = p(\mathrm{\#t}) = \theta$$$$
+$$P(X=\mathrm{\#t}) = p(\mathrm{\#t}) = \theta$$
 
 Often, people write $$P(X)$$ $$\{p(x) | x \in X\}$$ to refer to the whole distribution over the random variable $$X$$. 
-<!-- todo: add scoring functions -->
+
 
 # The Categorical Distribution
 
@@ -51,8 +51,7 @@ A *categorical distribution* is the name for a probability distribution over $$k
 
 If $$x$$ is a random variable drawn from a categorical distribution with parameters $$\theta$$, we write. 
 
-$$$$X \sim \mathrm{categorical}(\theta)$$$$
+$$X \sim \mathrm{categorical}(\theta)$$
 
 ## Sampling from a Categorical Distribution
 How can we write a sampler for categorical distributions in our language?
-<!-- todo: should I start with a scorer? We might -->
