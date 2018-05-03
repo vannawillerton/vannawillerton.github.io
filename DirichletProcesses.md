@@ -1,4 +1,8 @@
-# Dirichlet Processes
+---
+title: The Dirichlet Process
+---
+
+# The Dirichlet Process
 
 ### Topics to cover from ProbMods 
 1. Introduction and Motivation for non-parametric distributions
@@ -9,6 +13,7 @@
 ..* Draws from the Dirichlet Process are themselves discrete distributions over the simplex $$\Theta$$.
 ..* Parameters $$\alpha$$ (concentration param. Positive real number) and $$H$$ (base distributiob. Distribution over the simplex $$\Theta$$)
 3. Describe formally the generative model
+$$useBasicLatexCommandsLikeThis?$$
 
 4. Constructing a DP with stick-breaking?
 5. Constructing a DP with CRP
