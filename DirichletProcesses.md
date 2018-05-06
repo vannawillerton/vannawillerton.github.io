@@ -2,36 +2,36 @@
 title: The Dirichlet Process
 ---
 
-#The Dirichlet Process
+# The Dirichlet Process
 
-##Bayesian Non-parametric Models
+## Bayesian Non-parametric Models
 
 In the Generative Models lecture, we talked about 'goodness of fit' of a model to some data. Parametric models using a fixed finite number of parameters may end up with a poor matching between the complexity of the model and the data. Non-parametric approaches fit a single model which adapts it's complexity based on the data given instead of having the complexity of the model given as a parameter, and risk overfitting. Our fundamental goal is to find good models for natural language sentence structure. As we have argued, no finite set of sentences is a good model for natural languages like English. The flexibility of this class of models, where the number of parameters is itself considered a random variable, makes bayesian non-parametrics a good choice for our problem.
 
 One option for defining infinite-dimensional priors over parameters is the Dirichlet Process (DP). This process defines a prior on parameters for a multinomial distribution with an infinite number of (mostly unused) possible outcomes.
 
-##Formal Description of the Dirichlet Process
+## Formal Description of the Dirichlet Process
 
 Recall that a standard probability distribution used over the (K-1)-dimensional simplex is the Dirichlet distribution, defined as follows.
 
 $$p(\theta_1,...,\theta_k;\alpha_1,...,\alpha_K)$$
 
-##Useful Metaphors
+## Useful Metaphors
 
-###Polya Urn Process
+### Polya Urn Process
 
-###Chinese Restaurant Process
+### Chinese Restaurant Process
 
-###Stick-breaking Process
+### Stick-breaking Process
 
-##Inference Procedure
+## Inference Procedure
 
-##Models of Cognition
+## Models of Cognition
 
 Bayesian non-parametric models can be useful to linguists and other cognitive scientists, not only as an analysis tool for the complex data dealt with when studying human language, but also as a model of cognition. We can think of the way children adaptively learn to categorize objects from observations in the world as a version of the Chinese Restaurant Process. 
 
 -----------------------------------------------------------
-#References 
+# References 
 
 Anderson, J. (1991). The adaptive nature of human categorization. *Psychological Review*, 98:409-429.
 
