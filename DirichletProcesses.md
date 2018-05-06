@@ -14,7 +14,7 @@ One option for defining infinite-dimensional priors over parameters is the Diric
 
 Recall that a standard probability distribution used over the (K-1)-dimensional simplex is the Dirichlet distribution, defined as follows.
 
-$$p(\theta_1,...,\theta_k;\alpha_1,...,\alpha_K)$$
+$$p\left(\theta_{1},\ldots ,\theta_{K};\alpha _{1},\ldots ,\alpha _{K}\right)= \frac{1}{B(\vec{\alpha})}\prod _{i=1}^{K}\theta_{i}^{\alpha _{i}-1}$$
 
 ## Useful Metaphors
 
