@@ -22,7 +22,7 @@ In order to understand the definition of the DP as an infinite-dimentional prior
 
 Repeatedly splitting a Dirichlet distributions into components based on the chain rule gives:
 
-$$p^{(K)} \sim \mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
+$$p^{(K)} \sim \mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
 Taking the limit as K goes to infinity gives a prior over an infinite-dimensional space.
 
@@ -30,13 +30,13 @@ Taking the limit as K goes to infinity gives a prior over an infinite-dimensiona
 
 We may now define the DP.
 
-$$p \sim \lim_{K\to\infty}\mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
+$$p \sim \lim_{K\to\infty}\mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
 For each point in this Dirichlet distribution, we assign a value drawn from a base distribution $$H$$. If G is a random distribution drawn from this Dirichlet process, then:
 
 $$G = \sum_{k=1}^{\infty} p_k\delta_{\theta_k}$$
 
-Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some locations and $$\theta_k$$ is the value or location of some point. Thus we have defined the dirichlet process and write:
+Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some location and $$\theta_k$$ is the value or location of some point. Thus we have defined the dirichlet process and write:
 
 $$G \sim DP(\alpha, H)$$
 
@@ -54,13 +54,35 @@ understanding the DP can be difficult, but a number of useful metaphors may help
 
 ### Stick-breaking Process
 
-The stick-breaking process is an intuitive way to visualize draws from a DP as being composed of a weighted sum of point masses. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k^'}_{k=1}{\infty}$$.
+The stick-breaking process is an intuitive way to visualize draws from a DP. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k^'}_{k=1}^{\infty}$$.
 
-### Polya Urn Process
+$$\beta_k^' \sim Beta(1,\alpha)$$
+
+Ultimately we would like to define a distribution on an infinite set of discrete outcomes that will represent categories or mixture components, but we start by defining a distribution on the natural numbers. The probability of the natural number $$k$$ is given by:
+
+$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i^')\dot\beta_k^'$$
+
+How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i^'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
+
+Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter.
 
 ### Chinese Restaurant Process
 
+
+
+### Blackwell-MacQueen Urn Scheme
+
+A final visualization of Dirichlet process and chinese restaurant process comes from an extension of the Polya urn scheme which allows a continuum of colors.
+
+Imagine that you start with an urn filled with $$\alpha$$ black balls. You then follow the following sampling scheme. At each step, draw a ball from the urn, then:
+
+1. If the ball is black, sample a new color from base distribution $$H$$, label a *new* ball with this colour, and put both balls back in the urn.
+2. If the ball is some non-black colour, label a new ball with the same colour, and put both balls back in the urn.
+
+Convince yourself that the resulting distribution over colours will be the same as the distribution over tables in the Chinese restaurant process.
+
 ## Inference Procedure
+
 
 -----------------------------------------------------------
 # References 
