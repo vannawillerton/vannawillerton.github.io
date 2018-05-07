@@ -22,7 +22,7 @@ In order to understand the definition of the DP as an infinite-dimentional prior
 
 Repeatedly splitting a Dirichlet distributions into components based on the chain rule gives:
 
-$$p^{(K)} &\sim& \mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
+$$p^{(K)} \sim \mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
 
 Taking the limit as K goes to infinity gives a prior over an infinite-dimensional space.
 
@@ -30,21 +30,21 @@ Taking the limit as K goes to infinity gives a prior over an infinite-dimensiona
 
 We may now define the DP.
 
-$$p &\sim& \lim_{K\to\infty}\mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
+$$p \sim \lim_{K\to\infty}\mathrm{Dirichlet}(frac{\alpha}{K},\ldots,frac{\alpha}{K})$$
 
 For each point in this Dirichlet distribution, we assign a value drawn from a base distribution $$H$$. If G is a random distribution drawn from this Dirichlet process, then:
 
 $$G = \sum_{k=1}^{\infty} p_k\delta_{\theta_k}$$
 
-Where $$p_k$$ is the probability assigned to the kth point and $$\theta_k$$ is the value of that point. Thus we have defined the dirichlet process and write:
+Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some locations and $$\theta_k$$ is the value or location of some point. Thus we have defined the dirichlet process and write:
 
-$$G &\sim& DP(\alpha, H)$$
+$$G \sim DP(\alpha, H)$$
 
 The DP is parameterized by $$\alpha$$ and $$H$$. $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will concentrate more tightly around the mean), and $$H$$ is the base distribution (essentially the mean).
 
-The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G &\sim& DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed,
+The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed,
 
-$$(G(A_1),\ldots,G(A_K)) &\sim& Dir(\alpha H(A_1),\ldots,\alpha H(A_K)).
+$$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$.
 
 It is important to note that in practice not all of the infinite components of the dirichlet process will need to be used. Only the components which are reflected in the data will be used, but unlike in parametric models there is flexibility, which can help to avoid overfitting and underfitting problems.
 
@@ -52,14 +52,15 @@ It is important to note that in practice not all of the infinite components of t
 
 understanding the DP can be difficult, but a number of useful metaphors may help to highlight some key properties.
 
+### Stick-breaking Process
+
+The stick-breaking process is an intuitive way to visualize draws from a DP as being composed of a weighted sum of point masses. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k^'}_{k=1}{\infty}$$.
+
 ### Polya Urn Process
 
 ### Chinese Restaurant Process
 
-### Stick-breaking Process
-
 ## Inference Procedure
-
 
 -----------------------------------------------------------
 # References 
@@ -71,3 +72,5 @@ Gershman, S. and Blei, D. (2011). A tutorial on bayesian nonparametric models ..
 Hjort, N., Holmes, C., Muller, P., and Walker, S., editors. (2010) *Bayesian Nonparametrics*. Number 28 in Cambridge series in Statistical and Probabilistic Mathematics. Cambridge University Press.
 
 Xing, E. “Bayesian Nonparametrics: Dirichlet Processes” Probabilistic Graphical Models, 10-708, Spring 2014, lecture.
+
+http://v1.probmods.org/non-parametric-models.html
