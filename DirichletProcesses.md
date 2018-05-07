@@ -54,15 +54,15 @@ understanding the DP can be difficult, but a number of useful metaphors may help
 
 ### Stick-breaking Process
 
-The stick-breaking process is an intuitive way to visualize draws from a DP. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k^'}_{k=1}^{\infty}$$.
+The stick-breaking process is an intuitive way to visualize draws from a DP. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k'}_{k=1}^{\infty}$$.
 
-$$\beta_k^' \sim Beta(1,\alpha)$$
+$$\beta_k' \sim Beta(1,\alpha)$$
 
 Ultimately we would like to define a distribution on an infinite set of discrete outcomes that will represent categories or mixture components, but we start by defining a distribution on the natural numbers. The probability of the natural number $$k$$ is given by:
 
-$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i^')\dot\beta_k^'$$
+$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\dot\beta_k'$$
 
-How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i^'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
+How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
 
 Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter. This means that earlier draws from the DP are more likely to be redrawn than later draws.
 
