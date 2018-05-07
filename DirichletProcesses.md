@@ -8,7 +8,7 @@ title: The Dirichlet Process
 
 In the Generative Models lecture, we talked about 'goodness of fit' of a model to some data. Parametric models using a fixed finite number of parameters may end up with a poor matching between the complexity of the model and the data. Non-parametric approaches fit a single model which adapts it's complexity based on the data given instead of having the complexity of the model given as a parameter, and risk overfitting. Our fundamental goal is to find good models for natural language sentence structure. As we have argued, no finite set of sentences is a good model for natural languages like English. The flexibility of this class of models, where the number of parameters is itself considered a random variable, makes bayesian non-parametrics a good choice for our problem.
 
-One option for defining infinite-dimensional priors over parameters is the Dirichlet Process (DP). This process defines a prior on parameters for a multinomial distribution with an infinite number of (mostly unused) possible outcomes.
+One option for defining infinite-dimensional priors over parameters is the Dirichlet Process (DP). This process defines a prior on parameters for a multinomial distribution with an infinite number of (mostly unused) possible outcomes. The DP is a stochastic process defining a distributions over distributions. That is, each draw from a DP is is itself a probability distribution. The Dirichlet Process is the best known example of a *non-parametric distribution*. The term *non-parametric* refers to statistical models whose size or complexity can grow with the data, rather than being specified in advance.
 
 ## Formal Description of the Dirichlet Process
 
@@ -42,9 +42,9 @@ $$G \sim DP(\alpha, H)$$
 
 The DP is parameterized by $$\alpha$$ and $$H$$. $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will concentrate more tightly around the mean), and $$H$$ is the base distribution (essentially the mean).
 
-The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed,
+The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed.
 
-$$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$.
+$$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$
 
 It is important to note that in practice not all of the infinite components of the dirichlet process will need to be used. Only the components which are reflected in the data will be used, but unlike in parametric models there is flexibility, which can help to avoid overfitting and underfitting problems.
 
@@ -60,7 +60,7 @@ $$\beta_k' \sim Beta(1,\alpha)$$
 
 Ultimately we would like to define a distribution on an infinite set of discrete outcomes that will represent categories or mixture components, but we start by defining a distribution on the natural numbers. The probability of the natural number $$k$$ is given by:
 
-$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\dot\beta_k'$$
+$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
 
 How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
 
