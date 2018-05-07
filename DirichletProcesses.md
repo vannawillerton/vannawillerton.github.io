@@ -64,11 +64,29 @@ $$\beta_k = \prod_{i=1}{k-1} (1-\beta_i^')\dot\beta_k^'$$
 
 How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i^'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
 
-Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter.
+Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter. This means that earlier draws from the DP are more likely to be redrawn than later draws.
 
 ### Chinese Restaurant Process
 
+The Chinese Restaurant Process (CRP) is a more complex and widely used metaphor for understanding the Dirichlet Process. It is important to note that these metaphors are alternative but equivalent ways to construct the Dirichlet process. The CRP is usually described as a sequential sampling scheme using the metaphor of a restaurant.
 
+We imagine a restaurant with an infinite number of tables. The first customer enters the restaurant and sits at the first unoccupied table. The (N + 1)th customer enters the restaurant and sits at either an already occupied table or a new, unoccupied table, according to the following distribution.
+
+$$\tau^{(N+1)}|\tau^{(1)},\ldots,\tau^{(N)},\alpha \sim 
+\sum_{i=1}^K \frac{y_i}{N+\alpha}\delta_{\tau_i}+
+\frac{\alpha}{N+\alpha}\delta_{\tau_{K+1}}$$
+
+$$N$$ is the total number of customers in the restaurant. $$K$$ is the total number of occupied tables, indexed by $$K\leq i\leq 1$$. $$\tau^{(j)}$$ regers to the table chosen by the $$j$$th customer. $$\tau_i$$ refers to the $$i$$th occupied table in the restaurant. $$y_i$$ is the number of customers seated at table $$\tau_i$$. Finally, $$\delta_\tau$$ is the $$\delta$$-distribution which puts all of its mass on table $$\tau$$.
+
+More intuitively, customers sit at a table which is already occupied with probability proportional to the number of individuals already seated at that table. Customers sit at a new table with probability controlled by the concentration parameter $$\alpha$$.
+
+Each table has a *dish* associated with it. Each dish $$v$$ acts as a label on the table; it is shared by all customers seated at that table. When the first customer sits at a new table, $$\tau_i$$, a dish is sampled from the base distribution H and is placed on that table. From then on, all customers who are seated at table $$\tau_i$$ share the sampled dish $$v_{\tau_i}$$.
+ 
+#### Key Properties of the DP
+
+The CRP metaphor helps to highlight some properties of the DP. The first is that the CRP implements a simplicity bias. It assigns a higher probability to partitions which (1) have fewer customers, (2) have fewer tables, and (3) for a fixed number of customers N, favors assigning them to the smallest number of tables.
+
+Thus the CRP favors simple restaurants and implements a *rich-get-richer* scheme, or self-reinforcing property. Because customers sit at a table with a probability proportional to the number of customers already at the table, it should be clear that tables with more customers have higher probability of being chosen by later customers. These properties mean that, all else being equal, when we use the CRP, we will favor reuse of previously computed values.
 
 ### Blackwell-MacQueen Urn Scheme
 
@@ -81,8 +99,9 @@ Imagine that you start with an urn filled with $$\alpha$$ black balls. You then 
 
 Convince yourself that the resulting distribution over colours will be the same as the distribution over tables in the Chinese restaurant process.
 
-## Inference Procedure
+## Inference?
 
+## Applications?
 
 -----------------------------------------------------------
 # References 
@@ -96,3 +115,5 @@ Hjort, N., Holmes, C., Muller, P., and Walker, S., editors. (2010) *Bayesian Non
 Xing, E. “Bayesian Nonparametrics: Dirichlet Processes” Probabilistic Graphical Models, 10-708, Spring 2014, lecture.
 
 http://v1.probmods.org/non-parametric-models.html
+
+https://en.wikipedia.org/wiki/Dirichlet_process
