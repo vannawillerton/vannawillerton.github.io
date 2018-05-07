@@ -20,7 +20,7 @@ $$p\left(\theta_{1},\ldots ,\theta_{K};\alpha _{1},\ldots ,\alpha _{K}\right)= \
 
 In order to understand the definition of the DP as an infinite-dimentional prior, it is important to note that the Dirichlet distribution satisfies conditions for the chain rule, which can be used to increase the dimentionality of a Dirichlet distribution. 
 
-Repeatedly splitting a Dirichlet distributions into components based on the chain rule gives:
+Repeatedly splitting a Dirichlet distributions into components based on the chain rule gives the following, where K is the number of components.
 
 $$p^{(K)} \sim \mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
@@ -28,19 +28,19 @@ Taking the limit as K goes to infinity gives a prior over an infinite-dimensiona
 
 #### Dirichlet Process
 
-We may now define the DP.
+We may now define the DP. As previously stated, we take the limit as K goes to infinity.
 
 $$p \sim \lim_{K\to\infty}\mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
-For each point in this Dirichlet distribution, we assign a value drawn from a base distribution $$H$$. If G is a random distribution drawn from this Dirichlet process, then:
+For each point in this distribution, we assign a value drawn from a base distribution $$H$$. If G is a random distribution drawn from this Dirichlet process, then:
 
 $$G = \sum_{k=1}^{\infty} p_k\delta_{\theta_k}$$
 
-Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some location and $$\theta_k$$ is the value or location of some point. Thus we have defined the dirichlet process and write:
+Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some location and $$\theta_k$$ is the value or location of some point. In other words, if G is a random distribution drawn from the process defined above, then it is an infinite discrete distribution over the same space as base distribution H.  Thus we have defined the dirichlet process and write:
 
 $$G \sim DP(\alpha, H)$$
 
-The DP is parameterized by $$\alpha$$ and $$H$$. $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will concentrate more tightly around the mean), and $$H$$ is the base distribution (essentially the mean).
+As you can see, the DP is parameterized by $$\alpha$$ and $$H$$. $$H$$ is the base distribution which essentially acts as a mean, and $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will concentrate more tightly around the mean).
 
 The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed.
 
@@ -50,7 +50,7 @@ It is important to note that in practice not all of the infinite components of t
 
 ## Useful Metaphors
 
-understanding the DP can be difficult, but a number of useful metaphors may help to highlight some key properties.
+Understanding the DP can be difficult, but a number of useful metaphors may help to highlight some key properties.
 
 ### Stick-breaking Process
 
@@ -62,7 +62,7 @@ Ultimately we would like to define a distribution on an infinite set of discrete
 
 $$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
 
-How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick.
+How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick. Note that the recursion implies that the stick may be broken up into infinitely many pieces.
 
 Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter. This means that earlier draws from the DP are more likely to be redrawn than later draws.
 
@@ -76,11 +76,15 @@ $$\tau^{(N+1)}|\tau^{(1)},\ldots,\tau^{(N)},\alpha \sim
 \sum_{i=1}^K \frac{y_i}{N+\alpha}\delta_{\tau_i}+
 \frac{\alpha}{N+\alpha}\delta_{\tau_{K+1}}$$
 
-$$N$$ is the total number of customers in the restaurant. $$K$$ is the total number of occupied tables, indexed by $$K\leq i\leq 1$$. $$\tau^{(j)}$$ regers to the table chosen by the $$j$$th customer. $$\tau_i$$ refers to the $$i$$th occupied table in the restaurant. $$y_i$$ is the number of customers seated at table $$\tau_i$$. Finally, $$\delta_\tau$$ is the $$\delta$$-distribution which puts all of its mass on table $$\tau$$.
+$$N$$ is the total number of customers in the restaurant. $$K$$ is the total number of occupied tables, indexed by $$K\leq i\leq 1$$. $$\tau^{(j)}$$ refers to the table chosen by the $$j$$th customer. $$\tau_i$$ refers to the $$i$$th occupied table in the restaurant. $$y_i$$ is the number of customers seated at table $$\tau_i$$. Finally, $$\delta_\tau$$ is the $$\delta$$-distribution which puts all of its mass on table $$\tau$$.
 
 More intuitively, customers sit at a table which is already occupied with probability proportional to the number of individuals already seated at that table. Customers sit at a new table with probability controlled by the concentration parameter $$\alpha$$.
 
 Each table has a *dish* associated with it. Each dish $$v$$ acts as a label on the table; it is shared by all customers seated at that table. When the first customer sits at a new table, $$\tau_i$$, a dish is sampled from the base distribution H and is placed on that table. From then on, all customers who are seated at table $$\tau_i$$ share the sampled dish $$v_{\tau_i}$$.
+
+One way of understanding the CRP is to think of it as defining a distribution over ways of partitioning $$N$$ items (customers) in to $$K$$ partitions (tables), for all possible $$N$$ and $$K$$.
+
+The probability of a particular partition of $$N$$ customers over $$K$$ tables is the product of probabilities of the $$N$$ choices made in seating those customers. It can easily be confirmed that the order in which elements are added to the partition components does not affect the probability of the final partition. That is, the terms of the product can be rearranged in any order. Thus the distribution dfined by a CRP is exchangeable.
  
 #### Key Properties of the DP
 
@@ -98,10 +102,6 @@ Imagine that you start with an urn filled with $$\alpha$$ black balls. You then 
 2. If the ball is some non-black colour, label a new ball with the same colour, and put both balls back in the urn.
 
 Convince yourself that the resulting distribution over colours will be the same as the distribution over tables in the Chinese restaurant process.
-
-## Inference?
-
-## Applications?
 
 -----------------------------------------------------------
 # References 
