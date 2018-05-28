@@ -36,6 +36,14 @@ advance.**you should probably define "non-parametric" the first time
 you use it**
 
 ## Formal Description of the Dirichlet Process
+**As a high-level note, I would give an intuitive overview of the DP
+before I jumped into any math. I like to present it as a distribution
+over infinite-sided dice. This naturally raises the question of how
+you define an infinite sided die. The clearest answer is the
+stick-breaking process. I find the limit derivation somewhat harder to
+follow and justify since it is a more "extensional" derivation and
+less "procedural"**
+
 
 #### Dirichlet Distribution
 
@@ -65,33 +73,79 @@ We may now define the DP. As previously stated, we take the limit as K goes to i
 
 $$p \sim \lim_{K\to\infty}\mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
-For each point in this distribution, we assign a value drawn from a base distribution $$H$$. If G is a random distribution drawn from this Dirichlet process, then:
+For each point in this distribution, we assign a value drawn from a
+base distribution $$H$$. If G is a random distribution drawn from this
+Dirichlet process, then:
 
 $$G = \sum_{k=1}^{\infty} p_k\delta_{\theta_k}$$
+**So, I think it is worth making it clear that the base distribution
+is just the distribution on labels on our infinite-sided die. FWIW I
+never find the notation above particularly clear. Since it uses $\sum$
+in a way that could bear some explaining (it is essentially an $\vee$
+or something --- it represents the set of choices in the
+distribution.**
 
-Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$ is the point mass of some location and $$\theta_k$$ is the value or location of some point. In other words, if G is a random distribution drawn from the process defined above, then it is an infinite discrete distribution over the same space as base distribution H.  Thus we have defined the dirichlet process and write:
+Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$
+is the point mass of some location and $$\theta_k$$ is the value or
+location of some point. In other words, if G is a random distribution
+drawn from the process defined above, then it is an infinite discrete
+distribution over the same space as base distribution H.**note that
+this is something which is not obvious, when they say this, it is
+because it was a result in the original ferguson paper** Thus we have
+defined the dirichlet process and write:
 
 $$G \sim DP(\alpha, H)$$
 
-As you can see, the DP is parameterized by $$\alpha$$ and $$H$$. $$H$$ is the base distribution which essentially acts as a mean, and $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will concentrate more tightly around the mean).
+As you can see, the DP is parameterized by $$\alpha$$ and $$H$$. $$H$$
+is the base distribution which essentially acts as a mean,**note that
+since DP is a measure on distributions, H is the mean distribution,
+probably worth stating explicitly** and $$\alpha$$ is a concentration
+parameter (for higher values of $$\alpha$$, the probability mass will
+concentrate more tightly around the mean).
 
-The way we have defined it builds up from finite dimentional distributions. In this way it is easy to show the existence of the DP by considering some finite measurable partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha, H)$$, then every measurable partition of $$\Theta$$ is Dirichlet distributed.
+The way we have defined it builds up from finite dimentional
+distributions.**It doesn't really build it up since it isn't a
+constructive definition. The $\epsilon$-$\delta$ definition is not
+really constructive, and so the limit definition doesn't really tell
+you how to work with this distribution.** In this way it is easy to
+show the existence of the DP by considering some finite measurable
+partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha,
+H)$$, then every measurable partition of $$\Theta$$ is Dirichlet
+distributed.**This last definition is the original one and complete
+nonconstructive, which is why no one used the DP until the stick
+breaking construction was given**
 
 $$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$
 
-It is important to note that in practice not all of the infinite components of the dirichlet process will need to be used. Only the components which are reflected in the data will be used, but unlike in parametric models there is flexibility, which can help to avoid overfitting and underfitting problems.
+It is important to note that in practice not all of the infinite
+components of the dirichlet process will need to be used.**in practice
+all but finitely many will ***not*** be used** Only the components
+which are reflected in the data will be used,**no idea what "reflected
+in the data" means here** but unlike in parametric models there is
+flexibility, which can help to avoid overfitting and underfitting
+problems.
 
 ## Useful Metaphors
 
-Understanding the DP can be difficult, but a number of useful metaphors may help to highlight some key properties.
+Understanding the DP can be difficult, but a number of useful
+metaphors may help to highlight some key properties.**these aren't
+really metaphors, they are constructions**
 
 ### Stick-breaking Process
 
-The stick-breaking process is an intuitive way to visualize draws from a DP. Imagine drawing an infinite sequence of samples from a Beta distribution with parameters 1, $$\alpha$$ (recall that the Beta distribution is a Dirichlet distribution over the 1 dimensional simplex). We write this infinite set of draws as $${\beta_k'}_{k=1}^{\infty}$$.
+The stick-breaking process is an intuitive way to visualize draws from
+a DP. Imagine drawing an infinite sequence of samples from a Beta
+distribution with parameters 1, $$\alpha$$ (recall that the Beta
+distribution is a Dirichlet distribution over the 1 dimensional
+simplex). We write this infinite set of draws as
+$${\beta_k'}_{k=1}^{\infty}$$.
 
 $$\beta_k' \sim Beta(1,\alpha)$$
 
-Ultimately we would like to define a distribution on an infinite set of discrete outcomes that will represent categories or mixture components, but we start by defining a distribution on the natural numbers. The probability of the natural number $$k$$ is given by:
+Ultimately we would like to define a distribution on an infinite set
+of discrete outcomes that will represent categories or mixture
+components, but we start by defining a distribution on the natural
+numbers. The probability of the natural number $$k$$ is given by:
 
 $$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
 
