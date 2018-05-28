@@ -22,27 +22,38 @@ discussion is too abstract right now. The most natural problem would
 be a distribution over an unbounded number of lexical items.**
 
 One option for defining infinite-dimensional priors over parameters is
-the Dirichlet Process (DP). This process defines a prior on parameters
-for a multinomial distribution with an infinite number of (mostly
-unused) possible outcomes. The DP is a stochastic process defining a
-distributions over distributions. That is, each draw from a DP is is
-itself a probability distribution. The Dirichlet Process is the best
-known example of a *non-parametric distribution*. The
+the Dirichlet Process (DP).**probably more accurate to say "defining a
+prior over infinite-dimensional parameters** This process defines a
+prior on parameters for a multinomial distribution with an infinite
+number of (mostly unused) possible outcomes. The DP is a stochastic
+process defining a distributions over distributions. That is, each
+draw from a DP is is itself a probability distribution.**Just like a
+dirichlet distribution, but infinite** The Dirichlet Process is the
+best known example of a *non-parametric distribution*. The
 term *non-parametric* refers to statistical models whose size or
 complexity can grow with the data, rather than being specified in
-advance.
+advance.**you should probably define "non-parametric" the first time
+you use it**
 
 ## Formal Description of the Dirichlet Process
 
 #### Dirichlet Distribution
 
-Recall that a standard probability distribution used over the (K-1)-dimensional simplex is the Dirichlet distribution, defined as follows.
+Recall that a standard probability distribution used over the
+(K-1)-dimensional simplex is the Dirichlet distribution, defined as
+follows.
 
 $$p\left(\theta_{1},\ldots ,\theta_{K};\alpha _{1},\ldots ,\alpha _{K}\right)= \frac{1}{B(\vec{\alpha})}\prod _{i=1}^{K}\theta_{i}^{\alpha _{i}-1}$$
 
-In order to understand the definition of the DP as an infinite-dimentional prior, it is important to note that the Dirichlet distribution satisfies conditions for the chain rule, which can be used to increase the dimentionality of a Dirichlet distribution. 
+In order to understand the definition of the DP as an
+infinite-dimentional prior, it is important to note that the Dirichlet
+distribution satisfies conditions for the chain rule, which can be
+used to increase the dimentionality of a Dirichlet distribution.**I
+wouldn't call this the chain rule, as we discussed**
 
-Repeatedly splitting a Dirichlet distributions into components based on the chain rule gives the following, where K is the number of components.
+Repeatedly splitting a Dirichlet distributions into components based
+on the chain rule gives the following, where K is the number of
+components.**It is not clear to me what this sentence means**
 
 $$p^{(K)} \sim \mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
