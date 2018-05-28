@@ -149,15 +149,40 @@ numbers. The probability of the natural number $$k$$ is given by:
 
 $$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
 
-How can this be interpreted as a generative process? Consider $$\beta_k$$ as the length of a piece of stick. You start with a unit-length stick and 'walk' down the natural numbers in order. At each step you flip a coin with weight $$\beta_i'$$, if the coin comes up false, you continue to the next natural number; if the coin comes up true at some point $$k$$, then we break the stick at that point. That piece of stick gets assigned to $$\beta_k$$, and recurse on the remaining length of the stick. Note that the recursion implies that the stick may be broken up into infinitely many pieces.
+How can this be interpreted as a generative process?**well it is a
+generative process already** Consider $$\beta_k$$ as the length of a
+piece of stick. You start with a unit-length stick and 'walk' down the
+natural numbers in order. At each step you flip a coin with weight
+$$\beta_i'$$, if the coin comes up false, you continue to the next
+natural number; if the coin comes up true at some point $$k$$, then we
+break the stick at that point. That piece of stick gets assigned to
+$$\beta_k$$, and recurse on the remaining length of the stick. Note
+that the recursion implies that the stick may be broken up into
+infinitely many pieces.**you are sort of mixing metaphors here.**
 
-Notice that the length of the piece that we break off is determined by the concentration parameter $$\alpha$$. As the size of the parameter increases, the chances of flipping the coin to true is higher and therefore the stick lengths become shorter. This means that earlier draws from the DP are more likely to be redrawn than later draws.
+Notice that the length of the piece that we break off is determined by
+the concentration parameter $$\alpha$$. As the size of the parameter
+increases, the chances of flipping the coin to true is higher and
+therefore the stick lengths become shorter. This means that earlier
+draws from the DP are more likely to be redrawn than later
+draws.**this is backwards, the higher $\alpha$ the further you tend to
+walk out your sequences of $\beta$s**
 
 ### Chinese Restaurant Process
 
-The Chinese Restaurant Process (CRP) is a more complex and widely used metaphor for understanding the Dirichlet Process. It is important to note that these metaphors are alternative but equivalent ways to construct the Dirichlet process. The CRP is usually described as a sequential sampling scheme using the metaphor of a restaurant.
+The Chinese Restaurant Process (CRP) is a more complex and widely used
+metaphor for understanding the Dirichlet Process. It is important to
+note that these metaphors are alternative but equivalent ways to
+construct the Dirichlet process. The CRP is usually described as a
+sequential sampling scheme using the metaphor of a restaurant.**I
+wouldn't call these metaphors --- they are mathematically formal. The
+names are metaphorical, but the mathematical objects are not**
 
-We imagine a restaurant with an infinite number of tables. The first customer enters the restaurant and sits at the first unoccupied table. The (N + 1)th customer enters the restaurant and sits at either an already occupied table or a new, unoccupied table, according to the following distribution.
+We imagine a restaurant with an infinite number of tables. The first
+customer enters the restaurant and sits at the first unoccupied table.
+The (N + 1)th customer enters the restaurant and sits at either an
+already occupied table or a new, unoccupied table, according to the
+following distribution.
 
 $$\tau^{(N+1)}|\tau^{(1)},\ldots,\tau^{(N)},\alpha \sim 
 \sum_{i=1}^K \frac{y_i}{N+\alpha}\delta_{\tau_i}+
