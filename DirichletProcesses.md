@@ -4,9 +4,33 @@ title: The Dirichlet Process
 
 ## Bayesian Non-parametric Models
 
-In the Generative Models lecture, we talked about 'goodness of fit' of a model to some data. Parametric models using a fixed finite number of parameters may end up with a poor matching between the complexity of the model and the data. Non-parametric approaches fit a single model which adapts it's complexity based on the data given instead of having the complexity of the model given as a parameter, and risk overfitting. Our fundamental goal is to find good models for natural language sentence structure. As we have argued, no finite set of sentences is a good model for natural languages like English. The flexibility of this class of models, where the number of parameters is itself considered a random variable, makes bayesian non-parametrics a good choice for our problem.
+In the Generative Models lecture, we talked about 'goodness of fit' of
+a model to some data. Parametric models using a fixed finite number of
+parameters may end up with a poor matching between the complexity of
+the model and the data. Non-parametric approaches fit a single model
+which adapts it's complexity based on the data given instead of having
+the complexity of the model given as a parameter, and risk
+overfitting.**This last comment about overfitting is a bit strange and
+out of nowhere and unexplained** Our fundamental goal is to find good
+models for natural language sentence structure. As we have argued, no
+finite set of sentences is a good model for natural languages like
+English. The flexibility of this class of models, where the number of
+parameters is itself considered a random variable, makes bayesian
+non-parametrics a good choice for our problem.**for the actual course,
+I would try to lead with a problem that needs to be solved, this
+discussion is too abstract right now. The most natural problem would
+be a distribution over an unbounded number of lexical items.**
 
-One option for defining infinite-dimensional priors over parameters is the Dirichlet Process (DP). This process defines a prior on parameters for a multinomial distribution with an infinite number of (mostly unused) possible outcomes. The DP is a stochastic process defining a distributions over distributions. That is, each draw from a DP is is itself a probability distribution. The Dirichlet Process is the best known example of a *non-parametric distribution*. The term *non-parametric* refers to statistical models whose size or complexity can grow with the data, rather than being specified in advance.
+One option for defining infinite-dimensional priors over parameters is
+the Dirichlet Process (DP). This process defines a prior on parameters
+for a multinomial distribution with an infinite number of (mostly
+unused) possible outcomes. The DP is a stochastic process defining a
+distributions over distributions. That is, each draw from a DP is is
+itself a probability distribution. The Dirichlet Process is the best
+known example of a *non-parametric distribution*. The
+term *non-parametric* refers to statistical models whose size or
+complexity can grow with the data, rather than being specified in
+advance.
 
 ## Formal Description of the Dirichlet Process
 
