@@ -169,7 +169,6 @@ draws.**this is backwards, the higher $\alpha$ the further you tend to
 walk out your sequences of $\beta$s**
 
 ### Chinese Restaurant Process
-
 The Chinese Restaurant Process (CRP) is a more complex and widely used
 metaphor for understanding the Dirichlet Process. It is important to
 note that these metaphors are alternative but equivalent ways to
@@ -188,43 +187,99 @@ $$\tau^{(N+1)}|\tau^{(1)},\ldots,\tau^{(N)},\alpha \sim
 \sum_{i=1}^K \frac{y_i}{N+\alpha}\delta_{\tau_i}+
 \frac{\alpha}{N+\alpha}\delta_{\tau_{K+1}}$$
 
-$$N$$ is the total number of customers in the restaurant. $$K$$ is the total number of occupied tables, indexed by $$K\leq i\leq 1$$. $$\tau^{(j)}$$ refers to the table chosen by the $$j$$th customer. $$\tau_i$$ refers to the $$i$$th occupied table in the restaurant. $$y_i$$ is the number of customers seated at table $$\tau_i$$. Finally, $$\delta_\tau$$ is the $$\delta$$-distribution which puts all of its mass on table $$\tau$$.
+$$N$$ is the total number of customers in the restaurant. $$K$$ is the
+total number of occupied tables, indexed by $$K\leq i\leq 1$$.
+$$\tau^{(j)}$$ refers to the table chosen by the $$j$$th customer.
+$$\tau_i$$ refers to the $$i$$th occupied table in the restaurant.
+$$y_i$$ is the number of customers seated at table $$\tau_i$$.
+Finally, $$\delta_\tau$$ is the $$\delta$$-distribution which puts all
+of its mass on table $$\tau$$.
 
-More intuitively, customers sit at a table which is already occupied with probability proportional to the number of individuals already seated at that table. Customers sit at a new table with probability controlled by the concentration parameter $$\alpha$$.
+More intuitively, customers sit at a table which is already occupied
+with probability proportional to the number of individuals already
+seated at that table. Customers sit at a new table with probability
+controlled by the concentration parameter $$\alpha$$.
 
-Each table has a *dish* associated with it. Each dish $$v$$ acts as a label on the table; it is shared by all customers seated at that table. When the first customer sits at a new table, $$\tau_i$$, a dish is sampled from the base distribution H and is placed on that table. From then on, all customers who are seated at table $$\tau_i$$ share the sampled dish $$v_{\tau_i}$$.
+Each table has a *dish* associated with it. Each dish $$v$$ acts as a
+label on the table; it is shared by all customers seated at that
+table. When the first customer sits at a new table, $$\tau_i$$, a dish
+is sampled from the base distribution H and is placed on that table.
+From then on, all customers who are seated at table $$\tau_i$$ share
+the sampled dish $$v_{\tau_i}$$.
 
-One way of understanding the CRP is to think of it as defining a distribution over ways of partitioning $$N$$ items (customers) in to $$K$$ partitions (tables), for all possible $$N$$ and $$K$$.
+One way of understanding the CRP is to think of it as defining a
+distribution over ways of partitioning $$N$$ items (customers) in to
+$$K$$ partitions (tables), for all possible $$N$$ and $$K$$.
 
-The probability of a particular partition of $$N$$ customers over $$K$$ tables is the product of probabilities of the $$N$$ choices made in seating those customers. It can easily be confirmed that the order in which elements are added to the partition components does not affect the probability of the final partition. That is, the terms of the product can be rearranged in any order. Thus the distribution dfined by a CRP is exchangeable.
+The probability of a particular partition of $$N$$ customers over
+$$K$$ tables is the product of probabilities of the $$N$$ choices made
+in seating those customers. It can easily be confirmed that the order
+in which elements are added to the partition components does not
+affect the probability of the final partition. That is, the terms of
+the product can be rearranged in any order. Thus the distribution
+dfined by a CRP is exchangeable.
+
+**So the CRP is related to the DP just like the polya urn scheme is
+related to the Dirichlet distribution. I think this is really worth
+drawing out. I.e., the CRP is the posterior predictive distribution
+when you integrate out draws from the DP. You can look through the
+notes on the Polya urn scheme from the lectures**
  
 #### Key Properties of the DP
 
-The CRP metaphor helps to highlight some properties of the DP. The first is that the CRP implements a simplicity bias. It assigns a higher probability to partitions which (1) have fewer customers, (2) have fewer tables, and (3) for a fixed number of customers N, favors assigning them to the smallest number of tables.
+The CRP metaphor helps to highlight some properties of the DP. The
+first is that the CRP implements a simplicity bias. It assigns a
+higher probability to partitions which (1) have fewer customers, (2)
+have fewer tables, and (3) for a fixed number of customers N, favors
+assigning them to the smallest number of tables.
 
-Thus the CRP favors simple restaurants and implements a *rich-get-richer* scheme, or self-reinforcing property. Because customers sit at a table with a probability proportional to the number of customers already at the table, it should be clear that tables with more customers have higher probability of being chosen by later customers. These properties mean that, all else being equal, when we use the CRP, we will favor reuse of previously computed values.
+Thus the CRP favors simple restaurants and implements
+a *rich-get-richer* scheme, or self-reinforcing property. Because
+customers sit at a table with a probability proportional to the number
+of customers already at the table, it should be clear that tables with
+more customers have higher probability of being chosen by later
+customers. These properties mean that, all else being equal, when we
+use the CRP, we will favor reuse of previously computed values.
 
 ### Blackwell-MacQueen Urn Scheme
 
-A final visualization of Dirichlet process and chinese restaurant process comes from an extension of the Polya urn scheme which allows a continuum of colors.
+A final visualization of Dirichlet process and chinese restaurant
+process comes from an extension of the Polya urn scheme which allows a
+continuum of colors.
 
-Imagine that you start with an urn filled with $$\alpha$$ black balls. You then follow the following sampling scheme. At each step, draw a ball from the urn, then:
+Imagine that you start with an urn filled with $$\alpha$$ black balls.
+You then follow the following sampling scheme. At each step, draw a
+ball from the urn, then:
 
-1. If the ball is black, sample a new color from base distribution $$H$$, label a *new* ball with this colour, and put both balls back in the urn.
-2. If the ball is some non-black colour, label a new ball with the same colour, and put both balls back in the urn.
+1. If the ball is black, sample a new color from base distribution
+$$H$$, label a *new* ball with this colour, and put both balls back in
+the urn.
 
-Convince yourself that the resulting distribution over colours will be the same as the distribution over tables in the Chinese restaurant process.
+2. If the ball is some non-black colour, label a new ball with the
+same colour, and put both balls back in the urn.
+
+Convince yourself that the resulting distribution over colours will be
+the same as the distribution over tables in the Chinese restaurant
+process.**I was never clear on the difference between the CRP and the
+BM Urn scheme. They seem like the same thing to me. Do you find the
+detailed history there?**
 
 -----------------------------------------------------------
 # References 
 
-Anderson, J. (1991). The adaptive nature of human categorization. *Psychological Review*, 98:409-429.
+Anderson, J. (1991). The adaptive nature of human
+categorization. *Psychological Review*, 98:409-429.**I think that
+Anderson accidentally defined something which looked like the CRP
+here**
 
-Gershman, S. and Blei, D. (2011). A tutorial on bayesian nonparametric models ...
+Gershman, S. and Blei, D. (2011). A tutorial on Bayesian nonparametric models ...
 
-Hjort, N., Holmes, C., Muller, P., and Walker, S., editors. (2010) *Bayesian Nonparametrics*. Number 28 in Cambridge series in Statistical and Probabilistic Mathematics. Cambridge University Press.
+Hjort, N., Holmes, C., Muller, P., and Walker, S., editors.
+(2010) *Bayesian Nonparametrics*. Number 28 in Cambridge series in
+Statistical and Probabilistic Mathematics. Cambridge University Press.
 
-Xing, E. “Bayesian Nonparametrics: Dirichlet Processes” Probabilistic Graphical Models, 10-708, Spring 2014, lecture.
+Xing, E. “Bayesian Nonparametrics: Dirichlet Processes” Probabilistic
+Graphical Models, 10-708, Spring 2014, lecture.
 
 http://v1.probmods.org/non-parametric-models.html
 
