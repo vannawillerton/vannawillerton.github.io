@@ -9,31 +9,27 @@ a model to some data. Parametric models using a fixed finite number of
 parameters may end up with a poor matching between the complexity of
 the model and the data. Non-parametric approaches fit a single model
 which adapts it's complexity based on the data given instead of having
-the complexity of the model given as a parameter, and risk
-overfitting.**This last comment about overfitting is a bit strange and
-out of nowhere and unexplained** Our fundamental goal is to find good
+the complexity of the model given as a parameter. Our fundamental goal is to find good
 models for natural language sentence structure. As we have argued, no
 finite set of sentences is a good model for natural languages like
 English. The flexibility of this class of models, where the number of
 parameters is itself considered a random variable, makes bayesian
-non-parametrics a good choice for our problem.**for the actual course,
+non-parametrics a good choice for our problem. **for the actual course,
 I would try to lead with a problem that needs to be solved, this
 discussion is too abstract right now. The most natural problem would
 be a distribution over an unbounded number of lexical items.**
 
-One option for defining infinite-dimensional priors over parameters is
-the Dirichlet Process (DP).**probably more accurate to say "defining a
-prior over infinite-dimensional parameters** This process defines a
+One option for defining a prior over infinite-dimensional parameters is
+the Dirichlet Process (DP). This process defines a
 prior on parameters for a multinomial distribution with an infinite
 number of (mostly unused) possible outcomes. The DP is a stochastic
 process defining a distributions over distributions. That is, each
-draw from a DP is is itself a probability distribution.**Just like a
-dirichlet distribution, but infinite** The Dirichlet Process is the
+draw from a DP is is itself a probability distribution. Just like a
+dirichlet distribution, but infinite. The Dirichlet Process is the
 best known example of a *non-parametric distribution*. The
 term *non-parametric* refers to statistical models whose size or
 complexity can grow with the data, rather than being specified in
-advance.**you should probably define "non-parametric" the first time
-you use it**
+advance.
 
 ## Formal Description of the Dirichlet Process
 **As a high-level note, I would give an intuitive overview of the DP
@@ -55,13 +51,14 @@ $$p\left(\theta_{1},\ldots ,\theta_{K};\alpha _{1},\ldots ,\alpha _{K}\right)= \
 
 In order to understand the definition of the DP as an
 infinite-dimentional prior, it is important to note that the Dirichlet
-distribution satisfies conditions for the chain rule, which can be
-used to increase the dimentionality of a Dirichlet distribution.**I
-wouldn't call this the chain rule, as we discussed**
+distribution satisfies conditions for the expansion rule, which can be
+used to increase the dimentionality of a Dirichlet distribution. Let $$(p_1,\ldots,p_K \sim \mathrm{Dirichlet}(\alpha_1,\ldots,\alpha_K)$$ and $$\theta \sim \mathrm{Beta}(\alpha_1b,\alpha_1(1-b))$$ for $$0 < b < 1$$. Then one dimension of the Dirichlet distribution can be split into two dimensions as follows:
+
+$$(p_1\theta,p(1-\theta),p_2,\ldots,p_K) \sim \mathrm{Dirichlet}(\alpha_1b,\alpha_1(1-b),\alpha_2,\ldots,\alpha_K$$
 
 Repeatedly splitting a Dirichlet distributions into components based
-on the chain rule gives the following, where K is the number of
-components.**It is not clear to me what this sentence means**
+on the expansion rule gives the following, where K is the number of
+components.
 
 $$p^{(K)} \sim \mathrm{Dirichlet}(\frac{\alpha}{K},\ldots,\frac{\alpha}{K})$$
 
@@ -97,17 +94,10 @@ defined the dirichlet process and write:
 $$G \sim DP(\alpha, H)$$
 
 As you can see, the DP is parameterized by $$\alpha$$ and $$H$$. $$H$$
-is the base distribution which essentially acts as a mean,**note that
-since DP is a measure on distributions, H is the mean distribution,
-probably worth stating explicitly** and $$\alpha$$ is a concentration
-parameter (for higher values of $$\alpha$$, the probability mass will
+is the base distribution. Since the DP is a measure on distributions, H is the mean distribution. $$\alpha$$ is a concentration parameter (for higher values of $$\alpha$$, the probability mass will
 concentrate more tightly around the mean).
 
-The way we have defined it builds up from finite dimentional
-distributions.**It doesn't really build it up since it isn't a
-constructive definition. The $\epsilon$-$\delta$ definition is not
-really constructive, and so the limit definition doesn't really tell
-you how to work with this distribution.** In this way it is easy to
+In this way it is easy to
 show the existence of the DP by considering some finite measurable
 partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha,
 H)$$, then every measurable partition of $$\Theta$$ is Dirichlet
@@ -117,19 +107,11 @@ breaking construction was given**
 
 $$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$
 
-It is important to note that in practice not all of the infinite
-components of the dirichlet process will need to be used.**in practice
-all but finitely many will ***not*** be used** Only the components
-which are reflected in the data will be used,**no idea what "reflected
-in the data" means here** but unlike in parametric models there is
-flexibility, which can help to avoid overfitting and underfitting
-problems.
+It is important to note that in practice all but a finite subset will **not** be used. The amound of components used in the end should reflect a the complexity of the data.
 
-## Useful Metaphors
+## Useful Constructions
 
-Understanding the DP can be difficult, but a number of useful
-metaphors may help to highlight some key properties.**these aren't
-really metaphors, they are constructions**
+Understanding the DP can be difficult, but a number of constructions may help to highlight some key properties.
 
 ### Stick-breaking Process
 
@@ -149,8 +131,7 @@ numbers. The probability of the natural number $$k$$ is given by:
 
 $$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
 
-How can this be interpreted as a generative process?**well it is a
-generative process already** Consider $$\beta_k$$ as the length of a
+Consider $$\beta_k$$ as the length of a
 piece of stick. You start with a unit-length stick and 'walk' down the
 natural numbers in order. At each step you flip a coin with weight
 $$\beta_i'$$, if the coin comes up false, you continue to the next
@@ -170,12 +151,10 @@ walk out your sequences of $\beta$s**
 
 ### Chinese Restaurant Process
 The Chinese Restaurant Process (CRP) is a more complex and widely used
-metaphor for understanding the Dirichlet Process. It is important to
-note that these metaphors are alternative but equivalent ways to
+construction for understanding the Dirichlet Process. It is important to
+note that these are alternative but equivalent ways to
 construct the Dirichlet process. The CRP is usually described as a
-sequential sampling scheme using the metaphor of a restaurant.**I
-wouldn't call these metaphors --- they are mathematically formal. The
-names are metaphorical, but the mathematical objects are not**
+sequential sampling scheme using the metaphor of a restaurant.
 
 We imagine a restaurant with an infinite number of tables. The first
 customer enters the restaurant and sits at the first unoccupied table.
@@ -203,7 +182,7 @@ controlled by the concentration parameter $$\alpha$$.
 Each table has a *dish* associated with it. Each dish $$v$$ acts as a
 label on the table; it is shared by all customers seated at that
 table. When the first customer sits at a new table, $$\tau_i$$, a dish
-is sampled from the base distribution H and is placed on that table.
+is sampled from the base distribution $$H$$ and is placed on that table.
 From then on, all customers who are seated at table $$\tau_i$$ share
 the sampled dish $$v_{\tau_i}$$.
 
@@ -227,7 +206,7 @@ notes on the Polya urn scheme from the lectures**
  
 #### Key Properties of the DP
 
-The CRP metaphor helps to highlight some properties of the DP. The
+The CRP construction helps to highlight some properties of the DP. The
 first is that the CRP implements a simplicity bias. It assigns a
 higher probability to partitions which (1) have fewer customers, (2)
 have fewer tables, and (3) for a fixed number of customers N, favors
@@ -258,11 +237,11 @@ the urn.
 2. If the ball is some non-black colour, label a new ball with the
 same colour, and put both balls back in the urn.
 
+This construction is the same as the Polya urn scheme except for the fact that the Polya urn scheme allows for draws from some finite set of colours X, while the Blackwell-MacQueen Urn scheme is not restricted to finite X. (Number of colours in the urn could be infinite).
+
 Convince yourself that the resulting distribution over colours will be
 the same as the distribution over tables in the Chinese restaurant
-process.**I was never clear on the difference between the CRP and the
-BM Urn scheme. They seem like the same thing to me. Do you find the
-detailed history there?**
+process.
 
 -----------------------------------------------------------
 # References 
