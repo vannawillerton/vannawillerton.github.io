@@ -126,9 +126,7 @@ In this way it is easy to
 show the existence of the DP by considering some finite measurable
 partition of $$\Theta$$, $${A_1,\ldots,A_K}$$. If $$G \sim DP(\alpha,
 H)$$, then every measurable partition of $$\Theta$$ is Dirichlet
-distributed.**This last definition is the original one and complete
-nonconstructive, which is why no one used the DP until the stick
-breaking construction was given**
+distributed.
 
 $$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$
 
@@ -188,8 +186,7 @@ the product can be rearranged in any order. Thus the distribution
 dfined by a CRP is exchangeable.
 
 **So the CRP is related to the DP just like the polya urn scheme is
-related to the Dirichlet distribution. I think this is really worth
-drawing out. I.e., the CRP is the posterior predictive distribution
+related to the Dirichlet distribution. I.e., the CRP is the posterior predictive distribution
 when you integrate out draws from the DP. You can look through the
 notes on the Polya urn scheme from the lectures**
  
