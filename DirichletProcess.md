@@ -51,7 +51,7 @@ of discrete outcomes that will represent categories or mixture
 components, but we start by defining a distribution on the natural
 numbers. The probability of the natural number $$k$$ is given by:
 
-$$\beta_k = \prod_{i=1}{k-1} (1-\beta_i')\cdot\beta_k'$$
+$$\beta_k = \prod^{k-1}_{i=1} (1-\beta_i')\cdot\beta_k'$$
 
 Now imagine "walking" down the natural numbers in order, flipping a coing with
 weight $$\beta_i'$$ for each natural number $$i$$. If at some $$i$$, the coin 
