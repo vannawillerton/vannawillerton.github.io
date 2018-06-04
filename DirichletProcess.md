@@ -124,7 +124,7 @@ $$(G(A_1),\ldots,G(A_K)) \sim Dir(\alpha H(A_1),\ldots,\alpha H(A_K))$$
 
 It is important to note that in practice all but a finite subset will **not** be used. The amound of components used in the end should reflect a the complexity of the data.
 
-## Useful Constructions
+## Other Useful Constructions
 
 Understanding the DP can be difficult, but a number of constructions may help to highlight some key properties.
 
