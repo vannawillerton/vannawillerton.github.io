@@ -1,6 +1,3 @@
----
-title: The Dirichlet Process
----
 
 ## Bayesian Non-parametric Models
 
