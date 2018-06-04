@@ -100,20 +100,12 @@ base distribution $$H$$. If G is a random distribution drawn from this
 Dirichlet process, then:
 
 $$G = \sum_{k=1}^{\infty} p_k\delta_{\theta_k}$$
-**So, I think it is worth making it clear that the base distribution
-is just the distribution on labels on our infinite-sided die. FWIW I
-never find the notation above particularly clear. Since it uses $\sum$
-in a way that could bear some explaining (it is essentially an $\vee$
-or something --- it represents the set of choices in the
-distribution.**
 
 Where $$p_k$$ is the probability assigned to the kth point, $$\delta$$
 is the point mass of some location and $$\theta_k$$ is the value or
 location of some point. In other words, if G is a random distribution
 drawn from the process defined above, then it is an infinite discrete
-distribution over the same space as base distribution H.**note that
-this is something which is not obvious, when they say this, it is
-because it was a result in the original ferguson paper** Thus we have
+distribution over the same space as base distribution H. Thus we have
 defined the dirichlet process and write:
 
 $$G \sim DP(\alpha, H)$$
@@ -233,9 +225,7 @@ process.
 # References 
 
 Anderson, J. (1991). The adaptive nature of human
-categorization. *Psychological Review*, 98:409-429.**I think that
-Anderson accidentally defined something which looked like the CRP
-here**
+categorization. *Psychological Review*, 98:409-429.
 
 Gershman, S. and Blei, D. (2011). A tutorial on Bayesian nonparametric models ...
 
